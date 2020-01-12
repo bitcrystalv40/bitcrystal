@@ -1421,10 +1421,23 @@ bool IsMine(const CKeyStore &keystore, const CScript& scriptPubKey)
 
 bool ExtractDestination(const CScript& scriptPubKey, CTxDestination& addressRet)
 {
+	std::string address;
+	return ExtractDestination(scriptPubKey, addressRet, address);
+}
+
+bool ExtractDestination(const CScript& scriptPubKey, CTxDestination& addressRet, std::string & address)
+{
     vector<valtype> vSolutions;
     txnouttype whichType;
-    if (!Solver(scriptPubKey, whichType, vSolutions))
+    if (!Solver(scriptPubKey, whichType, vSolutions)) {
+		if(whichType == TX_NONSTANDARD) {
+			if (hooks->ExtractAddress(scriptPubKey, address))
+			{
+				return true;
+			}
+		}
         return false;
+	}
 
     if (whichType == TX_PUBKEY)
     {
@@ -1439,7 +1452,7 @@ bool ExtractDestination(const CScript& scriptPubKey, CTxDestination& addressRet)
     else if (whichType == TX_SCRIPTHASH)
     {
         addressRet = CScriptID(uint160(vSolutions[0]));
-        return true;
+	    return true;
     }
     // Multisig txns have more than one address...
     return false;

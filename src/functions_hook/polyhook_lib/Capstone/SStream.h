@@ -4,6 +4,8 @@
 #ifndef CS_SSTREAM_H_
 #define CS_SSTREAM_H_
 
+#include "stdint.h"
+
 typedef struct SStream {
 	char buffer[512];
 	int index;

@@ -7,6 +7,12 @@
 #include "wallet.h"
 #include <boost/filesystem.hpp>
 
+#ifdef GUI
+#include "namecoin.h"
+extern std::map<std::vector<unsigned char>, PreparedNameFirstUpdate> mapMyNameFirstUpdate;
+extern std::map<uint160, std::vector<unsigned char> > mapMyNameHashes;   // Name for name_new hash (to show name in transaction list)
+#endif
+
 using namespace std;
 using namespace boost;
 
@@ -30,6 +36,27 @@ bool CWalletDB::EraseName(const string& strAddress)
     nWalletDBUpdated++;
     return Erase(make_pair(string("name"), strAddress));
 }
+
+#ifdef GUI
+bool CWalletDB::WriteNameFirstUpdate(const std::vector<unsigned char>& vchName,
+                                     const uint256& hex,
+                                     const uint64& rand,
+                                     const std::vector<unsigned char>& vchData,
+                                     const CWalletTx &wtx)
+{
+    CDataStream ssValue;
+    ssValue << hex << rand << vchData << wtx;
+
+    nWalletDBUpdated++;
+    return Write(make_pair(string("name_firstupdate"), vchName), ssValue, true);
+}
+
+bool CWalletDB::EraseNameFirstUpdate(const std::vector<unsigned char>& vchName)
+{
+    nWalletDBUpdated++;
+    return Erase(make_pair(string("name_firstupdate"), vchName));
+}
+#endif
 
 bool CWalletDB::ReadAccount(const string& strAccount, CAccount& account)
 {
@@ -242,6 +269,25 @@ ReadKeyValue(CWallet* pwallet, CDataStream& ssKey, CDataStream& ssValue,
             //    DateTimeStrFormat("%Y-%m-%d %H:%M:%S", wtx.GetBlockTime()).c_str(),
             //    wtx.hashBlock.ToString().c_str(),
             //    wtx.mapValue["message"].c_str());
+			
+#ifdef GUI
+            int op, nOut;
+            std::vector<std::vector<unsigned char> > vvch;
+            int nHeight;
+            if (!wtx.GetDepthInMainChain(nHeight))
+                nHeight = pindexBest->nHeight + 1;
+			
+            if (DecodeNameTx(wtx, op, nOut, vvch, nHeight) && op == OP_NAME_FIRSTUPDATE && vvch.size() == 3)
+            {
+                std::vector<unsigned char> &vchName = vvch[0];
+                std::vector<unsigned char> &vchRand = vvch[1];
+
+                std::vector<unsigned char> vchToHash(vchRand);
+                vchToHash.insert(vchToHash.end(), vchName.begin(), vchName.end());
+                uint160 hash =  Hash160(vchToHash);
+                mapMyNameHashes[hash] = vchName;
+            }
+#endif
         }
         else if (strType == "acentry")
         {
@@ -351,6 +397,47 @@ ReadKeyValue(CWallet* pwallet, CDataStream& ssKey, CDataStream& ssValue,
             ssKey >> nIndex;
             pwallet->setKeyPool.insert(nIndex);
         }
+		else if (strType == "address") 
+        { 
+            // Based on Codeshark's pull request: https://github.com/bitcoin/bitcoin/pull/2121/files
+
+            uint160 hash160;
+            ssKey >> hash160;
+
+            if (!pwallet->LoadAddress(hash160))
+            {
+                printf("Error reading wallet database: LoadAddress failed\n");
+                return false;
+            }
+        }
+#ifdef GUI
+        else if (strType == "name_firstupdate")
+        {
+            std::vector<unsigned char> vchName;
+            uint256 wtxInHash;
+
+            ssKey >> vchName;
+            PreparedNameFirstUpdate prep;
+            // Note: name, rand and data are stored unencrypted. Even if we encrypt them,
+            // they are recoverable from prep.wtx, which has to be unencrypted (so it can be
+            // auto-broadcasted, when name_new is 12 blocks old)
+            ssValue >> wtxInHash >> prep.rand >> prep.vchData >> prep.wtx;
+                
+            prep.wtx.pwallet = pwallet;
+
+            // TODO: also would be good to check that name, rand, wtxInHash and value match with prep.wtx
+            // Note: wtxInHash IS NOT prep.wtx.GetHash(), it is the hash of previous name_new
+
+            mapMyNames[vchName] = wtxInHash;
+            mapMyNameFirstUpdate[vchName] = prep;
+
+            std::vector<unsigned char> vchRand = CBigNum(prep.rand).getvch();
+            std::vector<unsigned char> vchToHash(vchRand);
+            vchToHash.insert(vchToHash.end(), vchName.begin(), vchName.end());
+            uint160 hash = Hash160(vchToHash);
+            mapMyNameHashes[hash] = vchName;
+        }
+#endif
         else if (strType == "version")
         {
             ssValue >> nFileVersion;

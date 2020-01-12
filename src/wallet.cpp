@@ -11,6 +11,8 @@
 #include "coincontrol.h"
 #include <boost/algorithm/string/replace.hpp>
 
+#include "namecoin.h"    // For DecodeNameScript in GetAmounts to correctly compute credit/debit
+
 using namespace std;
 
 
@@ -54,6 +56,16 @@ bool CWallet::AddKey(const CKey& key)
     if (!IsCrypted())
         return CWalletDB(strWalletFile).WriteKey(key.GetPubKey(), key.GetPrivKey());
     return true;
+}
+
+// Based on Codeshark's pull reqeust: https://github.com/bitcoin/bitcoin/pull/2121/files
+bool CWallet::AddAddress(const uint160& hash160)
+{
+    if (!CKeyStore::AddAddress(hash160))
+        return false;
+    if (!fFileBacked)
+        return true;
+    return CWalletDB(strWalletFile).WriteAddress(hash160);
 }
 
 bool CWallet::AddCryptedKey(const CPubKey &vchPubKey, const vector<unsigned char> &vchCryptedSecret)
@@ -567,6 +579,25 @@ int64 CWallet::GetDebit(const CTxIn &txin) const
     return 0;
 }
 
+int64 CWallet::GetDebitInclName(const CTxIn &txin) const
+{
+    {
+		LOCK(cs_wallet);
+        map<uint256, CWalletTx>::const_iterator mi = mapWallet.find(txin.prevout.hash);
+        if (mi != mapWallet.end())
+        {
+            const CWalletTx& prev = (*mi).second;
+            if (txin.prevout.n < prev.vout.size())
+            {
+                const CTxOut &txout = prev.vout[txin.prevout.n];
+                if (IsMine(txout) || hooks->IsMine(prev, txout))
+                    return txout.nValue;
+            }
+        }
+    }
+    return 0;
+}
+
 bool CWallet::IsChange(const CTxOut& txout) const
 {
     CTxDestination address;
@@ -632,32 +663,60 @@ int CWalletTx::GetRequestCount() const
     return nRequests;
 }
 
-void CWalletTx::GetAmounts(list<pair<CTxDestination, int64> >& listReceived,
-                           list<pair<CTxDestination, int64> >& listSent, int64& nFee, string& strSentAccount) const
+void CWalletTx::GetAmounts(int64& nGeneratedImmature, int64& nGeneratedMature, std::list<std::pair<CTxDestination, int64> >& listReceived,
+                           std::list<std::pair<CTxDestination, int64> >& listSent, int64& nFee, std::string& strSentAccount, bool &fNameTx) const
+
 {
-    nFee = 0;
+    nGeneratedImmature = nGeneratedMature = nFee = 0;
     listReceived.clear();
     listSent.clear();
     strSentAccount = strFromAccount;
+    fNameTx = false;
+
+    if (IsCoinBase())
+    {
+        if (GetBlocksToMaturity() > 0)
+            nGeneratedImmature = pwallet->GetCredit(*this);
+        else
+            nGeneratedMature = GetCredit();
+        return;
+    }
 
     // Compute fee:
-    int64 nDebit = GetDebit();
+    int64 nDebit = GetDebitInclName();
     if (nDebit > 0) // debit>0 means we signed/sent this transaction
     {
         int64 nValueOut = GetValueOut();
         nFee = nDebit - nValueOut;
     }
+	
+	// Compute the coin carried with the name operation
+    // as difference of GetDebitInclName() and GetDebit()
+    int64 nCarriedOverCoin = nDebit - GetDebit();
+    if (nCarriedOverCoin != 0)
+        fNameTx = true;
 
     // Sent/received.
     BOOST_FOREACH(const CTxOut& txout, vout)
     {
         CTxDestination address;
+		string strAddress;
         vector<unsigned char> vchPubKey;
-        if (!ExtractDestination(txout.scriptPubKey, address))
+        if (!ExtractDestination(txout.scriptPubKey, address, strAddress))
         {
             printf("CWalletTx::GetAmounts: Unknown transaction type found, txid %s\n",
                    this->GetHash().ToString().c_str());
-        }
+		    strAddress = " unknown ";
+        } else if(!strAddress.empty()) {
+			vector<vector<unsigned char> > vvch;
+            int op;
+            if (DecodeNameScript(txout.scriptPubKey, op, vvch))
+            {
+                nCarriedOverCoin -= txout.nValue;
+                if (op != OP_NAME_NEW)
+                    continue; // Ignore locked coin
+            }
+		}
 
         // Don't report 'change' txouts
         if (nDebit > 0 && pwallet->IsChange(txout))
@@ -670,19 +729,39 @@ void CWalletTx::GetAmounts(list<pair<CTxDestination, int64> >& listReceived,
             listReceived.push_back(make_pair(address, txout.nValue));
     }
 
+    // Carried over coin may be used to pay fee, if it was reserved during OP_NAME_NEW
+    if (nCarriedOverCoin > 0)
+    {
+        if (nCarriedOverCoin >= nFee)
+        {
+            nCarriedOverCoin -= nFee;
+            nFee = 0;
+        }
+        else
+        {
+            nFee -= nCarriedOverCoin;
+            nCarriedOverCoin = 0;
+        }
+    }
 }
 
-void CWalletTx::GetAccountAmounts(const string& strAccount, int64& nReceived,
+void CWalletTx::GetAccountAmounts(const std::string& strAccount, int64& nGenerated, int64& nReceived,
                                   int64& nSent, int64& nFee) const
 {
-    nReceived = nSent = nFee = 0;
+    nGenerated = nReceived = nSent = nFee = 0;
 
+    int64 allGeneratedImmature, allGeneratedMature, allFee;
+    allGeneratedImmature = allGeneratedMature = allFee = 0;
+	
     int64 allFee;
-    string strSentAccount;
-    list<pair<CTxDestination, int64> > listReceived;
-    list<pair<CTxDestination, int64> > listSent;
-    GetAmounts(listReceived, listSent, allFee, strSentAccount);
+    std::string strSentAccount;
+    std::list<pair<CTxDestination, int64> > listReceived;
+    std::list<pair<CTxDestination, int64> > listSent;
+	bool fNameTx;
+    GetAmounts(allGeneratedImmature, allGeneratedMature, listReceived, listSent, allFee, strSentAccount);
 
+    if (strAccount == "")
+        nGenerated = allGeneratedMature;
     if (strAccount == strSentAccount)
     {
         BOOST_FOREACH(const PAIRTYPE(CTxDestination,int64)& s, listSent)
@@ -899,7 +978,50 @@ void CWallet::ResendWalletTransactions()
     }
 }
 
+bool
+CWalletTx::GetNameUpdate (int& nOut, vchType& nm, vchType& val) const
+{
+  if (nVersion != NAMECOIN_TX_VERSION)
+    return false;
 
+  if (!nameTxDecoded)
+    {
+      nameTxDecoded = true;
+
+      std::vector<vchType> vvch;
+      int op;
+      if (DecodeNameTx (*this, op, nNameOut, vvch, -1))
+        switch (op)
+          {
+          case OP_NAME_FIRSTUPDATE:
+            vchName = vvch[0];
+            vchValue = vvch[2];
+            nameTxDecodeSuccess = true;
+            break;
+
+          case OP_NAME_UPDATE:
+            vchName = vvch[0];
+            vchValue = vvch[1];
+            nameTxDecodeSuccess = true;
+            break;
+
+          case OP_NAME_NEW:
+          default:
+            nameTxDecodeSuccess = false;
+            break;
+          }
+      else
+        nameTxDecodeSuccess = false;
+    }
+
+  if (!nameTxDecodeSuccess)
+    return false;
+
+  nOut = nNameOut;
+  nm = vchName;
+  val = vchValue;
+  return true;
+}
 
 
 

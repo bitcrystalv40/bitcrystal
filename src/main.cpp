@@ -595,7 +595,7 @@ bool CTransaction::CheckTransaction(CValidationState &state) const
                 return state.DoS(10, error("CTransaction::CheckTransaction() : prevout is null"));
     }
 
-    return true;
+    return hooks->CheckTransaction(*this);
 }
 
 int64 CTransaction::GetMinFee(unsigned int nBlockSize, bool fAllowFree,

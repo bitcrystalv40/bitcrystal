@@ -202,6 +202,7 @@ public:
 
     bool IsMine(const CTxIn& txin) const;
     int64 GetDebit(const CTxIn& txin) const;
+	int64 GetDebitInclName(const CTxIn& txin) const;
     bool IsMine(const CTxOut& txout) const
     {
         return ::IsMine(*this, txout.scriptPubKey);
@@ -236,6 +237,17 @@ public:
         BOOST_FOREACH(const CTxIn& txin, tx.vin)
         {
             nDebit += GetDebit(txin);
+            if (!MoneyRange(nDebit))
+                throw std::runtime_error("CWallet::GetDebit() : value out of range");
+        }
+        return nDebit;
+    }
+	int64 GetDebitInclName(const CTransaction& tx) const
+    {
+        int64 nDebit = 0;
+        BOOST_FOREACH(const CTxIn& txin, tx.vin)
+        {
+            nDebit += GetDebitInclName(txin);
             if (!MoneyRange(nDebit))
                 throw std::runtime_error("CWallet::GetDebit() : value out of range");
         }
@@ -382,16 +394,24 @@ public:
     int64 nOrderPos;  // position in ordered transaction list
 
     // memory only
-    mutable bool fDebitCached;
+    mutable bool fDebitCached, fDebitInclNameCached;
     mutable bool fCreditCached;
     mutable bool fImmatureCreditCached;
     mutable bool fAvailableCreditCached;
     mutable bool fChangeCached;
-    mutable int64 nDebitCached;
+    mutable int64 nDebitCached, nDebitInclNameCached;
     mutable int64 nCreditCached;
     mutable int64 nImmatureCreditCached;
     mutable int64 nAvailableCreditCached;
     mutable int64 nChangeCached;
+
+    /* For name transactions, cache the decoded info:  Name, value
+       and index out name output.  */
+    mutable bool nameTxDecoded;
+    mutable bool nameTxDecodeSuccess;
+    mutable int nNameOut;
+    mutable vchType vchName;
+    mutable vchType vchValue;
 
     CWalletTx()
     {
@@ -436,6 +456,10 @@ public:
         nAvailableCreditCached = 0;
         nChangeCached = 0;
         nOrderPos = -1;
+		
+		nameTxDecoded = false;
+        vchName.clear ();
+        vchValue.clear ();
     }
 
     IMPLEMENT_SERIALIZE
@@ -561,6 +585,17 @@ public:
         fDebitCached = true;
         return nDebitCached;
     }
+	
+	int64 GetDebitInclName() const
+    {
+        if (vin.empty())
+            return 0;
+        if (fDebitInclNameCached)
+            return nDebitInclNameCached;
+        nDebitInclNameCached = pwallet->GetDebitInclName(*this);
+        fDebitInclNameCached = true;
+        return nDebitInclNameCached;
+    }
 
     int64 GetCredit(bool fUseCache=true) const
     {
@@ -625,12 +660,12 @@ public:
         fChangeCached = true;
         return nChangeCached;
     }
+	
+    void GetAmounts(int64& nGeneratedImmature, int64& nGeneratedMature, std::list<std::pair<CTxDestination, int64> >& listReceived,
+                           std::list<std::pair<CTxDestination, int64> >& listSent, int64& nFee, std::string& strSentAccount, bool &fNameTx) const;
 
-    void GetAmounts(std::list<std::pair<CTxDestination, int64> >& listReceived,
-                    std::list<std::pair<CTxDestination, int64> >& listSent, int64& nFee, std::string& strSentAccount) const;
-
-    void GetAccountAmounts(const std::string& strAccount, int64& nReceived,
-                           int64& nSent, int64& nFee) const;
+    void GetAccountAmounts(const std::string& strAccount, int64& nGenerated, int64& nReceived,
+                                  int64& nSent, int64& nFee) const;
 
     bool IsFromMe() const
     {
@@ -688,6 +723,11 @@ public:
     void AddSupportingTransactions();
     bool AcceptWalletTransaction(bool fCheckInputs=true);
     void RelayWalletTransaction();
+	
+	/* Try to decode the tx as a name_(first)update and return true if
+       it works.  In this case, also the info is set in the output
+       arguments.  The result is cached to save CPU time.  */
+    bool GetNameUpdate (int& nOut, vchType& nm, vchType& val) const;
 };
 
 
@@ -859,5 +899,15 @@ private:
 };
 
 bool GetWalletFile(CWallet* pwallet, std::string &strWalletFileOut);
+
+#ifdef GUI
+// Editable transaction, which is not broadcasted immediately (only after 12 blocks)
+struct PreparedNameFirstUpdate
+{
+    uint64 rand;
+    std::vector<unsigned char> vchData;
+    CWalletTx wtx;
+};
+#endif
 
 #endif

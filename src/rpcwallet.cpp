@@ -790,11 +790,13 @@ Value getbalance(const Array& params, bool fHelp)
             if (!wtx.IsConfirmed())
                 continue;
 
-            int64 allFee;
+            int64 allGeneratedImmature, allGeneratedMature, allFee;
+            allGeneratedImmature = allGeneratedMature = allFee = 0;
             string strSentAccount;
             list<pair<CTxDestination, int64> > listReceived;
             list<pair<CTxDestination, int64> > listSent;
-            wtx.GetAmounts(listReceived, listSent, allFee, strSentAccount);
+			bool fNameTx;
+            wtx.GetAmounts(allGeneratedImmature, allGeneratedMature, listReceived, listSent, allFee, strSentAccount, fNameTx);
             if (wtx.GetDepthInMainChain() >= nMinDepth)
             {
                 BOOST_FOREACH(const PAIRTYPE(CTxDestination,int64)& r, listReceived)
@@ -803,6 +805,7 @@ Value getbalance(const Array& params, bool fHelp)
             BOOST_FOREACH(const PAIRTYPE(CTxDestination,int64)& r, listSent)
                 nBalance -= r.second;
             nBalance -= allFee;
+			nBalance += allGeneratedMature;
         }
         return  ValueFromAmount(nBalance);
     }

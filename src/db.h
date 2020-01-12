@@ -12,6 +12,7 @@
 #include <vector>
 
 #include <db_cxx.h>
+typedef std::vector<unsigned char> vchType;
 
 class CAddress;
 class CAddrMan;
@@ -307,10 +308,81 @@ public:
     bool static Rewrite(const std::string& strFile, const char* pszSkip = NULL);
 };
 
+class CTxDB : public CDB
+{
+public:
+    CTxDB(const char* pszMode="r+") : CDB("blkindex.dat", pszMode) { }
+private:
+    CTxDB(const CTxDB&);
+    void operator=(const CTxDB&);
+public:
+    bool ReadTxIndex(uint256 hash, CTxIndex& txindex);
+    bool UpdateTxIndex(uint256 hash, const CTxIndex& txindex);
+    bool AddTxIndex(const CTransaction& tx, const CDiskTxPos& pos, int nHeight);
+    bool EraseTxIndex(const CTransaction& tx);
+    bool ContainsTx(uint256 hash);
+    bool ReadDiskTx(uint256 hash, CTransaction& tx, CTxIndex& txindex);
+    bool ReadDiskTx(uint256 hash, CTransaction& tx);
+    bool ReadDiskTx(COutPoint outpoint, CTransaction& tx, CTxIndex& txindex);
+    bool ReadDiskTx(COutPoint outpoint, CTransaction& tx);
+    bool WriteBlockIndex(const CDiskBlockIndex& blockindex);
+    bool EraseBlockIndex(uint256 hash);
+    bool ReadHashBestChain(uint256& hashBestChain);
+    bool WriteHashBestChain(uint256 hashBestChain);
+    bool ReadBestInvalidWork(CBigNum& bnBestInvalidWork);
+    bool WriteBestInvalidWork(CBigNum bnBestInvalidWork);
 
+    /* Read/write number of "reserved" (but not yet used) bytes in the
+       block files.  */
+    unsigned ReadBlockFileReserved (unsigned num);
+    bool WriteBlockFileReserved (unsigned num, unsigned size);
 
+    bool LoadBlockIndex();
 
+    /* Update txindex to new data format.  */
+    bool RewriteTxIndex (int oldVersion);
+};
 
+/**
+ * Name index.  Non-inline implementation code is in namecoin.cpp, but the
+ * class is declared here because it will be used for the "wrapper" database
+ * set class below and in general makes sense here.
+ */
+class CNameDB : public CDB
+{
+public:
+    CNameDB(const char* pszMode="r+") : CDB("nameindex.dat", pszMode) { }
+
+    bool WriteName(const vchType& name, const std::vector<CNameIndex>& vtxPos)
+    {
+        return Write(make_pair(std::string("namei"), name), vtxPos);
+    }
+
+    bool ReadName(const vchType& name, std::vector<CNameIndex>& vtxPos)
+    {
+        return Read(make_pair(std::string("namei"), name), vtxPos);
+    }
+
+    bool ExistsName(const vchType& name)
+    {
+        return Exists(make_pair(std::string("namei"), name));
+    }
+
+    bool EraseName(const vchType& name)
+    {
+        return Erase(make_pair(std::string("namei"), name));
+    }
+
+    bool ScanNames(
+            const vchType& vchName,
+            int nMax,
+            std::vector<std::pair<vchType, CNameIndex> >& nameScan);
+            std::vector<std::pair<vchType, CNameIndex> >& nameScan);
+
+    bool test();
+
+    bool ReconstructNameIndex();
+};
 
 
 
@@ -324,5 +396,7 @@ public:
     bool Write(const CAddrMan& addr);
     bool Read(CAddrMan& addr);
 };
+
+
 
 #endif // BITCOIN_DB_H

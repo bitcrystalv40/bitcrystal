@@ -12,7 +12,7 @@ if exist C:\deps (
 	set /A DIR_EXISTS=%DIR_EXISTS%+1
 )
 
-if exist C:\mingw32 (
+if exist C:\MinGW (
 	set MINGW32_EXIST=1
 	set /A DIR_EXISTS=%DIR_EXISTS%+1
 )
@@ -22,11 +22,12 @@ if exist C:\Qt (
 	set /A DIR_EXISTS=%DIR_EXISTS%+1
 )
 
-if exist C:\MinGWcoin (
+if exist C:\MinGW (
 	set MINGWCOIN_EXIST=1
 	set /A DIR_EXISTS=%DIR_EXISTS%+1
 )
 
+set PATH=%PATH%;C:\MinGW\bin;C:\Qt\4.8.7\bin;
 if %DIR_EXISTS%==4 goto done else goto BatchGotAdmin
 rem this not by me
 
@@ -61,12 +62,12 @@ if %DEPS_EXIST%==0 (
 
 if %QT_EXIST%==0 (
 	mklink C:\Qt %~dp0build_deps\Qt
-	set PATH=C:\Qt\4.8.6\bin;%PATH%
+	set PATH=C:\Qt\4.8.7\bin;%PATH%
 )
 
 if %MINGW32_EXIST%==0 (
-	mklink C:\mingw32 %~dp0build_deps\mingw32
-	set PATH=C:\mingw32\bin;%PATH%
+	mklink C:\mingw %~dp0build_deps\mingw32
+	set PATH=C:\mingw\bin;%PATH%
 )
 
 if %MINGWCOIN_EXIST%==0 (

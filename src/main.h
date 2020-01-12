@@ -22,6 +22,8 @@ class CReserveKey;
 class CAddress;
 class CInv;
 class CNode;
+class CHooks;
+extern CHooks* hooks;
 
 struct CBlockIndexWorkComparator;
 #define IS_FREE 1
