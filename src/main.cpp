@@ -1476,6 +1476,8 @@ bool CTransaction::CheckInputs(CValidationState &state, CCoinsViewCache &inputs,
         if (nValueIn < GetValueOut())
             return state.DoS(100, error("CheckInputs() : %s value in < value out", GetHash().ToString().c_str()));
 
+        if (!hooks->ConnectInputs (*this, inputs.GetBestBlock(), posThisTx);
+            return false;
         // Tally transaction fees
         int64 nTxFee = nValueIn - GetValueOut();
         if (nTxFee < 0)
