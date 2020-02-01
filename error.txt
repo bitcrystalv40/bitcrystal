@@ -12,7 +12,7 @@ In file included from src\netbase.h:12:0,
                  from src\bignum.h:12,
                  from src\main.h:8,
                  from src\db.h:8,
-                 from src\namecoin.cpp:6:
+                 from src\net.cpp:9:
 src\compat.h:14:0: Warnung: »FD_SETSIZE« redefiniert
  #define FD_SETSIZE 1024 // max number of fds in fd_set
  
@@ -23,25 +23,47 @@ In file included from c:\mingw\include\winsock2.h:62:0,
                  from src\bignum.h:12,
                  from src\main.h:8,
                  from src\db.h:8,
-                 from src\namecoin.cpp:6:
+                 from src\net.cpp:9:
 c:\mingw\include\winsock.h:106:0: Anmerkung: dies ist die Stelle der vorherigen Definition
  #define FD_SETSIZE      64
  
 In file included from src\bignum.h:12:0,
                  from src\main.h:8,
                  from src\db.h:8,
-                 from src\namecoin.cpp:6:
+                 from src\net.cpp:9:
+src\util.h:309:22: Warnung: ungültiges Suffix an Literal; C++11 erfordert Leerzeichen zwischen Literal und Zeichenketten-Makro [-Wliteral-suffix]
+     return strprintf("%"PRI64d, n);
+                      ^
+In file included from src\netbase.h:12:0,
+                 from src\util.h:79,
+                 from src\irc.cpp:5:
+src\compat.h:14:0: Warnung: »FD_SETSIZE« redefiniert
+ #define FD_SETSIZE 1024 // max number of fds in fd_set
+ 
+In file included from c:\mingw\include\winsock2.h:62:0,
+                 from c:\mingw\include\_winsock.h:50,
+                 from c:\mingw\include\windows.h:85,
+                 from src\util.h:16,
+                 from src\irc.cpp:5:
+c:\mingw\include\winsock.h:106:0: Anmerkung: dies ist die Stelle der vorherigen Definition
+ #define FD_SETSIZE      64
+ 
+In file included from src\irc.cpp:5:0:
 src\util.h:309:22: Warnung: ungültiges Suffix an Literal; C++11 erfordert Leerzeichen zwischen Literal und Zeichenketten-Makro [-Wliteral-suffix]
      return strprintf("%"PRI64d, n);
                       ^
 In file included from src\main.h:10:0,
                  from src\db.h:8,
-                 from src\namecoin.cpp:6:
-src\net.h:370:20: Warnung: ungültiges Suffix an Literal; C++11 erfordert Leerzeichen zwischen Literal und Zeichenketten-Makro [-Wliteral-suffix]
+                 from src\net.cpp:9:
+src\net.h:367:20: Warnung: ungültiges Suffix an Literal; C++11 erfordert Leerzeichen zwischen Literal und Zeichenketten-Makro [-Wliteral-suffix]
+             printf("askfor %s   %"PRI64d" (%s)\n", inv.ToString().c_str(), nRequestTime, DateTimeStrFormat("%H:%M:%S", nRequestTime/1000000).c_str());
+                    ^
+In file included from src\irc.cpp:7:0:
+src\net.h:367:20: Warnung: ungültiges Suffix an Literal; C++11 erfordert Leerzeichen zwischen Literal und Zeichenketten-Makro [-Wliteral-suffix]
              printf("askfor %s   %"PRI64d" (%s)\n", inv.ToString().c_str(), nRequestTime, DateTimeStrFormat("%H:%M:%S", nRequestTime/1000000).c_str());
                     ^
 In file included from src\db.h:8:0,
-                 from src\namecoin.cpp:6:
+                 from src\net.cpp:9:
 src\main.h:463:26: Warnung: ungültiges Suffix an Literal; C++11 erfordert Leerzeichen zwischen Literal und Zeichenketten-Makro [-Wliteral-suffix]
          return strprintf("CTxOut(nValue=%"PRI64d".%05"PRI64d", scriptPubKey=%s)", nValue / COIN, nValue % COIN, scriptPubKey.ToString().substr(0,30).c_str());
                           ^
@@ -57,6 +79,37 @@ src\main.h:657:74: Warnung: ungültiges Suffix an Literal; C++11 erfordert Leerze
 src\main.h:1503:16: Warnung: ungültiges Suffix an Literal; C++11 erfordert Leerzeichen zwischen Literal und Zeichenketten-Makro [-Wliteral-suffix]
          printf("CBlock(hash=%s, ver=%d, hashPrevBlock=%s, hashMerkleRoot=%s, nTime=%u, nBits=%08x, nNonce=%u, vtx=%"PRIszu")\n",
                 ^
+src\net.cpp:1291:12: Warnung: ungültiges Suffix an Literal; C++11 erfordert Leerzeichen zwischen Literal und Zeichenketten-Makro [-Wliteral-suffix]
+     printf("Flushed %d addresses to peers.dat  %"PRI64d"ms\n",
+            ^
+In file included from c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:32:0,
+                 from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\irc.cpp:5:
+c:\deps\boost_1_55_0/boost/smart_ptr/detail/shared_count.hpp:323:33: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
+     explicit shared_count( std::auto_ptr<Y> & r ): pi_( new sp_counted_impl_p<Y>( r.get() ) )
+                                 ^~~~~~~~
+In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
+                 from c:\deps\boost_1_55_0/boost/config/no_tr1/memory.hpp:21,
+                 from c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:27,
+                 from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\irc.cpp:5:
+c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
+   template<typename> class auto_ptr;
+                            ^~~~~~~~
 In file included from c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:32:0,
                  from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17,
                  from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
@@ -69,7 +122,7 @@ In file included from c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:32:0,
                  from src\bignum.h:12,
                  from src\main.h:8,
                  from src\db.h:8,
-                 from src\namecoin.cpp:6:
+                 from src\net.cpp:9:
 c:\deps\boost_1_55_0/boost/smart_ptr/detail/shared_count.hpp:323:33: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
      explicit shared_count( std::auto_ptr<Y> & r ): pi_( new sp_counted_impl_p<Y>( r.get() ) )
                                  ^~~~~~~~
@@ -87,7 +140,170 @@ In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
                  from src\bignum.h:12,
                  from src\main.h:8,
                  from src\db.h:8,
-                 from src\namecoin.cpp:6:
+                 from src\net.cpp:9:
+c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
+   template<typename> class auto_ptr;
+                            ^~~~~~~~
+In file included from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17:0,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\irc.cpp:5:
+c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:247:65: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
+ template< class T, class R > struct sp_enable_if_auto_ptr< std::auto_ptr< T >, R >
+                                                                 ^~~~~~~~
+In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
+                 from c:\deps\boost_1_55_0/boost/config/no_tr1/memory.hpp:21,
+                 from c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:27,
+                 from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\irc.cpp:5:
+c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
+   template<typename> class auto_ptr;
+                            ^~~~~~~~
+In file included from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17:0,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\irc.cpp:5:
+c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:446:31: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
+     explicit shared_ptr( std::auto_ptr<Y> & r ): px(r.get()), pn()
+                               ^~~~~~~~
+In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
+                 from c:\deps\boost_1_55_0/boost/config/no_tr1/memory.hpp:21,
+                 from c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:27,
+                 from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\irc.cpp:5:
+c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
+   template<typename> class auto_ptr;
+                            ^~~~~~~~
+In file included from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17:0,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\irc.cpp:5:
+c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:459:22: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
+     shared_ptr( std::auto_ptr<Y> && r ): px(r.get()), pn()
+                      ^~~~~~~~
+In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
+                 from c:\deps\boost_1_55_0/boost/config/no_tr1/memory.hpp:21,
+                 from c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:27,
+                 from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\irc.cpp:5:
+c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
+   template<typename> class auto_ptr;
+                            ^~~~~~~~
+In file included from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17:0,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\irc.cpp:5:
+c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:525:34: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
+     shared_ptr & operator=( std::auto_ptr<Y> & r )
+                                  ^~~~~~~~
+In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
+                 from c:\deps\boost_1_55_0/boost/config/no_tr1/memory.hpp:21,
+                 from c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:27,
+                 from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\irc.cpp:5:
+c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
+   template<typename> class auto_ptr;
+                            ^~~~~~~~
+In file included from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17:0,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\irc.cpp:5:
+c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:534:34: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
+     shared_ptr & operator=( std::auto_ptr<Y> && r )
+                                  ^~~~~~~~
+In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
+                 from c:\deps\boost_1_55_0/boost/config/no_tr1/memory.hpp:21,
+                 from c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:27,
+                 from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\irc.cpp:5:
+c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
+   template<typename> class auto_ptr;
+                            ^~~~~~~~
+In file included from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17:0,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\irc.cpp:5:
+c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp: In Elementfunktion »boost::shared_ptr<T>& boost::shared_ptr<T>::operator=(std::auto_ptr<_Up>&&)«:
+c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:536:38: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
+         this_type( static_cast< std::auto_ptr<Y> && >( r ) ).swap( *this );
+                                      ^~~~~~~~
+In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
+                 from c:\deps\boost_1_55_0/boost/config/no_tr1/memory.hpp:21,
+                 from c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:27,
+                 from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\irc.cpp:5:
 c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
    template<typename> class auto_ptr;
                             ^~~~~~~~
@@ -102,7 +318,7 @@ In file included from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17:0,
                  from src\bignum.h:12,
                  from src\main.h:8,
                  from src\db.h:8,
-                 from src\namecoin.cpp:6:
+                 from src\net.cpp:9:
 c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:247:65: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
  template< class T, class R > struct sp_enable_if_auto_ptr< std::auto_ptr< T >, R >
                                                                  ^~~~~~~~
@@ -120,7 +336,7 @@ In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
                  from src\bignum.h:12,
                  from src\main.h:8,
                  from src\db.h:8,
-                 from src\namecoin.cpp:6:
+                 from src\net.cpp:9:
 c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
    template<typename> class auto_ptr;
                             ^~~~~~~~
@@ -135,7 +351,7 @@ In file included from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17:0,
                  from src\bignum.h:12,
                  from src\main.h:8,
                  from src\db.h:8,
-                 from src\namecoin.cpp:6:
+                 from src\net.cpp:9:
 c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:446:31: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
      explicit shared_ptr( std::auto_ptr<Y> & r ): px(r.get()), pn()
                                ^~~~~~~~
@@ -153,7 +369,7 @@ In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
                  from src\bignum.h:12,
                  from src\main.h:8,
                  from src\db.h:8,
-                 from src\namecoin.cpp:6:
+                 from src\net.cpp:9:
 c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
    template<typename> class auto_ptr;
                             ^~~~~~~~
@@ -168,7 +384,7 @@ In file included from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17:0,
                  from src\bignum.h:12,
                  from src\main.h:8,
                  from src\db.h:8,
-                 from src\namecoin.cpp:6:
+                 from src\net.cpp:9:
 c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:459:22: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
      shared_ptr( std::auto_ptr<Y> && r ): px(r.get()), pn()
                       ^~~~~~~~
@@ -186,7 +402,7 @@ In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
                  from src\bignum.h:12,
                  from src\main.h:8,
                  from src\db.h:8,
-                 from src\namecoin.cpp:6:
+                 from src\net.cpp:9:
 c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
    template<typename> class auto_ptr;
                             ^~~~~~~~
@@ -201,7 +417,7 @@ In file included from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17:0,
                  from src\bignum.h:12,
                  from src\main.h:8,
                  from src\db.h:8,
-                 from src\namecoin.cpp:6:
+                 from src\net.cpp:9:
 c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:525:34: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
      shared_ptr & operator=( std::auto_ptr<Y> & r )
                                   ^~~~~~~~
@@ -219,7 +435,7 @@ In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
                  from src\bignum.h:12,
                  from src\main.h:8,
                  from src\db.h:8,
-                 from src\namecoin.cpp:6:
+                 from src\net.cpp:9:
 c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
    template<typename> class auto_ptr;
                             ^~~~~~~~
@@ -234,7 +450,7 @@ In file included from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17:0,
                  from src\bignum.h:12,
                  from src\main.h:8,
                  from src\db.h:8,
-                 from src\namecoin.cpp:6:
+                 from src\net.cpp:9:
 c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:534:34: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
      shared_ptr & operator=( std::auto_ptr<Y> && r )
                                   ^~~~~~~~
@@ -252,7 +468,7 @@ In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
                  from src\bignum.h:12,
                  from src\main.h:8,
                  from src\db.h:8,
-                 from src\namecoin.cpp:6:
+                 from src\net.cpp:9:
 c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
    template<typename> class auto_ptr;
                             ^~~~~~~~
@@ -267,7 +483,7 @@ In file included from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17:0,
                  from src\bignum.h:12,
                  from src\main.h:8,
                  from src\db.h:8,
-                 from src\namecoin.cpp:6:
+                 from src\net.cpp:9:
 c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp: In Elementfunktion »boost::shared_ptr<T>& boost::shared_ptr<T>::operator=(std::auto_ptr<_Up>&&)«:
 c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:536:38: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
          this_type( static_cast< std::auto_ptr<Y> && >( r ) ).swap( *this );
@@ -286,7 +502,36 @@ In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
                  from src\bignum.h:12,
                  from src\main.h:8,
                  from src\db.h:8,
-                 from src\namecoin.cpp:6:
+                 from src\net.cpp:9:
+c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
+   template<typename> class auto_ptr;
+                            ^~~~~~~~
+In file included from c:\deps\boost_1_55_0/boost/bind/mem_fn.hpp:25:0,
+                 from c:\deps\boost_1_55_0/boost/mem_fn.hpp:22,
+                 from c:\deps\boost_1_55_0/boost/bind/bind.hpp:26,
+                 from c:\deps\boost_1_55_0/boost/bind.hpp:22,
+                 from c:\deps\boost_1_55_0/boost/thread/detail/thread.hpp:29,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:22,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\irc.cpp:5:
+c:\deps\boost_1_55_0/boost/get_pointer.hpp: Im globalen Gültigkeitsbereich:
+c:\deps\boost_1_55_0/boost/get_pointer.hpp:27:40: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
+ template<class T> T * get_pointer(std::auto_ptr<T> const& p)
+                                        ^~~~~~~~
+In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
+                 from c:\deps\boost_1_55_0/boost/config/no_tr1/memory.hpp:21,
+                 from c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:27,
+                 from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\irc.cpp:5:
 c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
    template<typename> class auto_ptr;
                             ^~~~~~~~
@@ -302,7 +547,7 @@ In file included from c:\deps\boost_1_55_0/boost/bind/mem_fn.hpp:25:0,
                  from src\bignum.h:12,
                  from src\main.h:8,
                  from src\db.h:8,
-                 from src\namecoin.cpp:6:
+                 from src\net.cpp:9:
 c:\deps\boost_1_55_0/boost/get_pointer.hpp: Im globalen Gültigkeitsbereich:
 c:\deps\boost_1_55_0/boost/get_pointer.hpp:27:40: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
  template<class T> T * get_pointer(std::auto_ptr<T> const& p)
@@ -321,7 +566,54 @@ In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
                  from src\bignum.h:12,
                  from src\main.h:8,
                  from src\db.h:8,
-                 from src\namecoin.cpp:6:
+                 from src\net.cpp:9:
+c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
+   template<typename> class auto_ptr;
+                            ^~~~~~~~
+In file included from c:\deps\boost_1_55_0/boost/thread/thread.hpp:13:0,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\irc.cpp:5:
+c:\deps\boost_1_55_0/boost/thread/detail/thread_group.hpp: In Elementfunktion »boost::thread* boost::thread_group::create_thread(F)«:
+c:\deps\boost_1_55_0/boost/thread/detail/thread_group.hpp:78:18: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
+             std::auto_ptr<thread> new_thread(new thread(threadfunc));
+                  ^~~~~~~~
+In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
+                 from c:\deps\boost_1_55_0/boost/config/no_tr1/memory.hpp:21,
+                 from c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:27,
+                 from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\irc.cpp:5:
+c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
+   template<typename> class auto_ptr;
+                            ^~~~~~~~
+In file included from c:\deps\boost_1_55_0/boost/scoped_ptr.hpp:14:0,
+                 from c:\deps\boost_1_55_0/boost/thread/future.hpp:30,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:24,
+                 from src\util.h:73,
+                 from src\irc.cpp:5:
+c:\deps\boost_1_55_0/boost/smart_ptr/scoped_ptr.hpp: Im globalen Gültigkeitsbereich:
+c:\deps\boost_1_55_0/boost/smart_ptr/scoped_ptr.hpp:68:31: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
+     explicit scoped_ptr( std::auto_ptr<T> p ) BOOST_NOEXCEPT : px( p.release() )
+                               ^~~~~~~~
+In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
+                 from c:\deps\boost_1_55_0/boost/config/no_tr1/memory.hpp:21,
+                 from c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:27,
+                 from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\irc.cpp:5:
 c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
    template<typename> class auto_ptr;
                             ^~~~~~~~
@@ -331,7 +623,7 @@ In file included from c:\deps\boost_1_55_0/boost/thread/thread.hpp:13:0,
                  from src\bignum.h:12,
                  from src\main.h:8,
                  from src\db.h:8,
-                 from src\namecoin.cpp:6:
+                 from src\net.cpp:9:
 c:\deps\boost_1_55_0/boost/thread/detail/thread_group.hpp: In Elementfunktion »boost::thread* boost::thread_group::create_thread(F)«:
 c:\deps\boost_1_55_0/boost/thread/detail/thread_group.hpp:78:18: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
              std::auto_ptr<thread> new_thread(new thread(threadfunc));
@@ -350,7 +642,7 @@ In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
                  from src\bignum.h:12,
                  from src\main.h:8,
                  from src\db.h:8,
-                 from src\namecoin.cpp:6:
+                 from src\net.cpp:9:
 c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
    template<typename> class auto_ptr;
                             ^~~~~~~~
@@ -361,7 +653,7 @@ In file included from c:\deps\boost_1_55_0/boost/scoped_ptr.hpp:14:0,
                  from src\bignum.h:12,
                  from src\main.h:8,
                  from src\db.h:8,
-                 from src\namecoin.cpp:6:
+                 from src\net.cpp:9:
 c:\deps\boost_1_55_0/boost/smart_ptr/scoped_ptr.hpp: Im globalen Gültigkeitsbereich:
 c:\deps\boost_1_55_0/boost/smart_ptr/scoped_ptr.hpp:68:31: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
      explicit scoped_ptr( std::auto_ptr<T> p ) BOOST_NOEXCEPT : px( p.release() )
@@ -380,692 +672,10 @@ In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
                  from src\bignum.h:12,
                  from src\main.h:8,
                  from src\db.h:8,
-                 from src\namecoin.cpp:6:
+                 from src\net.cpp:9:
 c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
    template<typename> class auto_ptr;
                             ^~~~~~~~
-In file included from c:\deps\boost_1_55_0/boost/spirit/home/classic/core/non_terminal/grammar.hpp:21:0,
-                 from c:\deps\boost_1_55_0/boost/spirit/home/classic/core.hpp:42,
-                 from c:\deps\boost_1_55_0/boost/spirit/include/classic_core.hpp:11,
-                 from src\json/json_spirit_reader_template.h:19,
-                 from src\bitcoinrpc.h:16,
-                 from src\namecoin.cpp:13:
-c:\deps\boost_1_55_0/boost/spirit/home/classic/core/non_terminal/impl/grammar.ipp: In Elementfunktion »boost::spirit::classic::impl::grammar_helper<GrammarT, DerivedT, ScannerT>::definition_t& boost::spirit::classic::impl::grammar_helper<GrammarT, DerivedT, ScannerT>::define(const grammar_t*)«:
-c:\deps\boost_1_55_0/boost/spirit/home/classic/core/non_terminal/impl/grammar.ipp:177:18: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
-             std::auto_ptr<definition_t>
-                  ^~~~~~~~
-In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
-                 from c:\deps\boost_1_55_0/boost/config/no_tr1/memory.hpp:21,
-                 from c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:27,
-                 from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17,
-                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
-                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
-                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
-                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
-                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
-                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
-                 from src\util.h:73,
-                 from src\bignum.h:12,
-                 from src\main.h:8,
-                 from src\db.h:8,
-                 from src\namecoin.cpp:6:
-c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
-   template<typename> class auto_ptr;
-                            ^~~~~~~~
-./build_win32_objects\bitcoingui.o:bitcoingui.cpp:(.bss+0x90): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\bitcoingui.o:bitcoingui.cpp:(.bss+0x60): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\bitcoingui.o:bitcoingui.cpp:(.data+0x0): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\bitcoingui.o:bitcoingui.cpp:(.bss+0x20): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\bitcoingui.o:bitcoingui.cpp:(.bss+0x48): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\bitcoingui.o:bitcoingui.cpp:(.bss+0x49): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\bitcoingui.o:bitcoingui.cpp:(.bss+0x4a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\bitcoingui.o:bitcoingui.cpp:(.bss+0xa2): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\bitcoingui.o:bitcoingui.cpp:(.bss+0xa3): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\transactiontablemodel.o:transactiontablemodel.cpp:(.bss+0x70): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\transactiontablemodel.o:transactiontablemodel.cpp:(.bss+0x40): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\transactiontablemodel.o:transactiontablemodel.cpp:(.data+0x0): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\transactiontablemodel.o:transactiontablemodel.cpp:(.bss+0x0): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\transactiontablemodel.o:transactiontablemodel.cpp:(.bss+0x28): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\transactiontablemodel.o:transactiontablemodel.cpp:(.bss+0x29): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\transactiontablemodel.o:transactiontablemodel.cpp:(.bss+0x2a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\transactiontablemodel.o:transactiontablemodel.cpp:(.bss+0x82): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\transactiontablemodel.o:transactiontablemodel.cpp:(.bss+0x83): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\addresstablemodel.o:addresstablemodel.cpp:(.bss+0x90): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\addresstablemodel.o:addresstablemodel.cpp:(.bss+0x60): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\addresstablemodel.o:addresstablemodel.cpp:(.data+0x0): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\addresstablemodel.o:addresstablemodel.cpp:(.bss+0x20): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\addresstablemodel.o:addresstablemodel.cpp:(.bss+0x48): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\addresstablemodel.o:addresstablemodel.cpp:(.bss+0x49): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\addresstablemodel.o:addresstablemodel.cpp:(.bss+0x4a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\addresstablemodel.o:addresstablemodel.cpp:(.bss+0xa2): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\addresstablemodel.o:addresstablemodel.cpp:(.bss+0xa3): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\sendcoinsdialog.o:sendcoinsdialog.cpp:(.bss+0x70): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\sendcoinsdialog.o:sendcoinsdialog.cpp:(.bss+0x40): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\sendcoinsdialog.o:sendcoinsdialog.cpp:(.data+0x0): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\sendcoinsdialog.o:sendcoinsdialog.cpp:(.bss+0x0): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\sendcoinsdialog.o:sendcoinsdialog.cpp:(.bss+0x28): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\sendcoinsdialog.o:sendcoinsdialog.cpp:(.bss+0x29): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\sendcoinsdialog.o:sendcoinsdialog.cpp:(.bss+0x2a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\sendcoinsdialog.o:sendcoinsdialog.cpp:(.bss+0x82): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\sendcoinsdialog.o:sendcoinsdialog.cpp:(.bss+0x83): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\coincontroldialog.o:coincontroldialog.cpp:(.bss+0x90): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\coincontroldialog.o:coincontroldialog.cpp:(.bss+0x60): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\coincontroldialog.o:coincontroldialog.cpp:(.data+0x0): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\coincontroldialog.o:coincontroldialog.cpp:(.bss+0x20): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\coincontroldialog.o:coincontroldialog.cpp:(.bss+0x48): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\coincontroldialog.o:coincontroldialog.cpp:(.bss+0x49): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\coincontroldialog.o:coincontroldialog.cpp:(.bss+0x4a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\coincontroldialog.o:coincontroldialog.cpp:(.bss+0xa2): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\coincontroldialog.o:coincontroldialog.cpp:(.bss+0xa3): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\signverifymessagedialog.o:signverifymessagedialog.cpp:(.bss+0x70): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\signverifymessagedialog.o:signverifymessagedialog.cpp:(.bss+0x40): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\signverifymessagedialog.o:signverifymessagedialog.cpp:(.data+0x0): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\signverifymessagedialog.o:signverifymessagedialog.cpp:(.bss+0x0): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\signverifymessagedialog.o:signverifymessagedialog.cpp:(.bss+0x28): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\signverifymessagedialog.o:signverifymessagedialog.cpp:(.bss+0x29): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\signverifymessagedialog.o:signverifymessagedialog.cpp:(.bss+0x2a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\signverifymessagedialog.o:signverifymessagedialog.cpp:(.bss+0x82): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\signverifymessagedialog.o:signverifymessagedialog.cpp:(.bss+0x83): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\alert.o:alert.cpp:(.bss+0xb0): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\alert.o:alert.cpp:(.bss+0x80): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\alert.o:alert.cpp:(.data+0x0): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\alert.o:alert.cpp:(.bss+0x40): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\alert.o:alert.cpp:(.bss+0x68): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\alert.o:alert.cpp:(.bss+0x69): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\alert.o:alert.cpp:(.bss+0x6a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\alert.o:alert.cpp:(.bss+0xc2): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\alert.o:alert.cpp:(.bss+0xc3): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\sync.o:sync.cpp:(.bss+0x0): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\sync.o:sync.cpp:(.bss+0x1): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\util.o:util.cpp:(.bss+0xc0): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\util.o:util.cpp:(.bss+0xc1): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\netbase.o:netbase.cpp:(.bss+0x1): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\netbase.o:netbase.cpp:(.bss+0x2): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\script.o:script.cpp:(.bss+0x70): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\script.o:script.cpp:(.bss+0x40): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\script.o:script.cpp:(.data+0x0): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\script.o:script.cpp:(.bss+0x0): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\script.o:script.cpp:(.bss+0x28): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\script.o:script.cpp:(.bss+0x29): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\script.o:script.cpp:(.bss+0x2a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\script.o:script.cpp:(.bss+0x82): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\script.o:script.cpp:(.bss+0x83): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\main.o:main.cpp:(.bss+0x310): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\main.o:main.cpp:(.bss+0x2e0): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\main.o:main.cpp:(.data+0xc): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\main.o:main.cpp:(.bss+0x2a0): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\main.o:main.cpp:(.bss+0x2c8): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\main.o:main.cpp:(.bss+0x2c9): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\main.o:main.cpp:(.bss+0x2ca): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\main.o:main.cpp:(.bss+0x322): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\main.o:main.cpp:(.bss+0x323): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\init.o:init.cpp:(.bss+0x730): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\init.o:init.cpp:(.bss+0x700): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\init.o:init.cpp:(.bss+0x742): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\init.o:init.cpp:(.data+0x0): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\init.o:init.cpp:(.bss+0x6c0): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\init.o:init.cpp:(.bss+0x6e8): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\init.o:init.cpp:(.bss+0x6e9): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\init.o:init.cpp:(.bss+0x6ea): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\init.o:init.cpp:(.bss+0x743): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\net.o:net.cpp:(.bss+0x20a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\net.o:net.cpp:(.bss+0x220): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\net.o:net.cpp:(.bss+0x250): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\net.o:net.cpp:(.data+0xd4): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\net.o:net.cpp:(.bss+0x1e0): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\net.o:net.cpp:(.bss+0x208): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\net.o:net.cpp:(.bss+0x209): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\net.o:net.cpp:(.bss+0x262): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\net.o:net.cpp:(.bss+0x263): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\bloom.o:bloom.cpp:(.bss+0x70): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\bloom.o:bloom.cpp:(.bss+0x40): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\bloom.o:bloom.cpp:(.data+0x0): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\bloom.o:bloom.cpp:(.bss+0x0): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\bloom.o:bloom.cpp:(.bss+0x28): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\bloom.o:bloom.cpp:(.bss+0x29): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\bloom.o:bloom.cpp:(.bss+0x2a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\bloom.o:bloom.cpp:(.bss+0x82): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\bloom.o:bloom.cpp:(.bss+0x83): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\checkpoints.o:checkpoints.cpp:(.bss+0x70): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\checkpoints.o:checkpoints.cpp:(.bss+0x40): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\checkpoints.o:checkpoints.cpp:(.data+0x0): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\checkpoints.o:checkpoints.cpp:(.bss+0x0): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\checkpoints.o:checkpoints.cpp:(.bss+0x28): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\checkpoints.o:checkpoints.cpp:(.bss+0x29): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\checkpoints.o:checkpoints.cpp:(.bss+0x2a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\checkpoints.o:checkpoints.cpp:(.bss+0x82): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\checkpoints.o:checkpoints.cpp:(.bss+0x83): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\addrman.o:addrman.cpp:(.bss+0x0): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\addrman.o:addrman.cpp:(.bss+0x1): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\db.o:db.cpp:(.bss+0x130): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\db.o:db.cpp:(.bss+0x100): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\db.o:db.cpp:(.bss+0x143): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\db.o:db.cpp:(.data+0x0): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\db.o:db.cpp:(.bss+0xc0): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\db.o:db.cpp:(.bss+0xe8): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\db.o:db.cpp:(.bss+0xe9): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\db.o:db.cpp:(.bss+0xea): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\db.o:db.cpp:(.bss+0x142): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\walletdb.o:walletdb.cpp:(.bss+0x70): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\walletdb.o:walletdb.cpp:(.bss+0x40): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\walletdb.o:walletdb.cpp:(.data+0x0): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\walletdb.o:walletdb.cpp:(.bss+0x0): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\walletdb.o:walletdb.cpp:(.bss+0x28): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\walletdb.o:walletdb.cpp:(.bss+0x29): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\walletdb.o:walletdb.cpp:(.bss+0x2a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\walletdb.o:walletdb.cpp:(.bss+0x82): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\walletdb.o:walletdb.cpp:(.bss+0x83): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\clientmodel.o:clientmodel.cpp:(.bss+0x70): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\clientmodel.o:clientmodel.cpp:(.bss+0x40): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\clientmodel.o:clientmodel.cpp:(.data+0x0): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\clientmodel.o:clientmodel.cpp:(.bss+0x0): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\clientmodel.o:clientmodel.cpp:(.bss+0x28): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\clientmodel.o:clientmodel.cpp:(.bss+0x29): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\clientmodel.o:clientmodel.cpp:(.bss+0x2a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\clientmodel.o:clientmodel.cpp:(.bss+0x82): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\clientmodel.o:clientmodel.cpp:(.bss+0x83): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\guiutil.o:guiutil.cpp:(.bss+0x70): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\guiutil.o:guiutil.cpp:(.bss+0x40): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\guiutil.o:guiutil.cpp:(.data+0x0): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\guiutil.o:guiutil.cpp:(.bss+0x0): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\guiutil.o:guiutil.cpp:(.bss+0x28): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\guiutil.o:guiutil.cpp:(.bss+0x29): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\guiutil.o:guiutil.cpp:(.bss+0x2a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\guiutil.o:guiutil.cpp:(.bss+0x82): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\guiutil.o:guiutil.cpp:(.bss+0x83): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\transactionrecord.o:transactionrecord.cpp:(.bss+0x70): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\transactionrecord.o:transactionrecord.cpp:(.bss+0x40): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\transactionrecord.o:transactionrecord.cpp:(.data+0x0): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\transactionrecord.o:transactionrecord.cpp:(.bss+0x0): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\transactionrecord.o:transactionrecord.cpp:(.bss+0x28): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\transactionrecord.o:transactionrecord.cpp:(.bss+0x29): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\transactionrecord.o:transactionrecord.cpp:(.bss+0x2a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\transactionrecord.o:transactionrecord.cpp:(.bss+0x82): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\transactionrecord.o:transactionrecord.cpp:(.bss+0x83): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\optionsmodel.o:optionsmodel.cpp:(.bss+0x70): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\optionsmodel.o:optionsmodel.cpp:(.bss+0x40): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\optionsmodel.o:optionsmodel.cpp:(.data+0x0): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\optionsmodel.o:optionsmodel.cpp:(.bss+0x0): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\optionsmodel.o:optionsmodel.cpp:(.bss+0x28): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\optionsmodel.o:optionsmodel.cpp:(.bss+0x29): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\optionsmodel.o:optionsmodel.cpp:(.bss+0x2a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\optionsmodel.o:optionsmodel.cpp:(.bss+0x82): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\optionsmodel.o:optionsmodel.cpp:(.bss+0x83): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\transactiondesc.o:transactiondesc.cpp:(.bss+0x70): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\transactiondesc.o:transactiondesc.cpp:(.bss+0x40): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\transactiondesc.o:transactiondesc.cpp:(.data+0x0): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\transactiondesc.o:transactiondesc.cpp:(.bss+0x0): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\transactiondesc.o:transactiondesc.cpp:(.bss+0x28): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\transactiondesc.o:transactiondesc.cpp:(.bss+0x29): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\transactiondesc.o:transactiondesc.cpp:(.bss+0x2a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\transactiondesc.o:transactiondesc.cpp:(.bss+0x82): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\transactiondesc.o:transactiondesc.cpp:(.bss+0x83): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\wallet.o:wallet.cpp:(.bss+0x70): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\wallet.o:wallet.cpp:(.bss+0x40): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\wallet.o:wallet.cpp:(.data+0x0): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\wallet.o:wallet.cpp:(.bss+0x0): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\wallet.o:wallet.cpp:(.bss+0x28): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\wallet.o:wallet.cpp:(.bss+0x29): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\wallet.o:wallet.cpp:(.bss+0x2a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\wallet.o:wallet.cpp:(.bss+0x82): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\wallet.o:wallet.cpp:(.bss+0x83): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\keystore.o:keystore.cpp:(.bss+0x0): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\keystore.o:keystore.cpp:(.bss+0x1): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\walletmodel.o:walletmodel.cpp:(.bss+0x70): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\walletmodel.o:walletmodel.cpp:(.bss+0x40): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\walletmodel.o:walletmodel.cpp:(.data+0x0): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\walletmodel.o:walletmodel.cpp:(.bss+0x0): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\walletmodel.o:walletmodel.cpp:(.bss+0x28): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\walletmodel.o:walletmodel.cpp:(.bss+0x29): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\walletmodel.o:walletmodel.cpp:(.bss+0x2a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\walletmodel.o:walletmodel.cpp:(.bss+0x82): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\walletmodel.o:walletmodel.cpp:(.bss+0x83): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\walletview.o:walletview.cpp:(.bss+0x0): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\walletview.o:walletview.cpp:(.bss+0x1): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\bitcoinrpc.o:bitcoinrpc.cpp:(.bss+0x90): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\bitcoinrpc.o:bitcoinrpc.cpp:(.bss+0x60): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\bitcoinrpc.o:bitcoinrpc.cpp:(.data+0x1c): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\bitcoinrpc.o:bitcoinrpc.cpp:(.bss+0x20): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\bitcoinrpc.o:bitcoinrpc.cpp:(.bss+0x48): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\bitcoinrpc.o:bitcoinrpc.cpp:(.bss+0x49): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\bitcoinrpc.o:bitcoinrpc.cpp:(.bss+0x4a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\bitcoinrpc.o:bitcoinrpc.cpp:(.bss+0xa2): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\bitcoinrpc.o:bitcoinrpc.cpp:(.bss+0xa3): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\rpcdump.o:rpcdump.cpp:(.bss+0x70): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\rpcdump.o:rpcdump.cpp:(.bss+0x40): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\rpcdump.o:rpcdump.cpp:(.data+0x1c): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\rpcdump.o:rpcdump.cpp:(.bss+0x0): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\rpcdump.o:rpcdump.cpp:(.bss+0x28): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\rpcdump.o:rpcdump.cpp:(.bss+0x29): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\rpcdump.o:rpcdump.cpp:(.bss+0x2a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\rpcdump.o:rpcdump.cpp:(.bss+0x82): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\rpcdump.o:rpcdump.cpp:(.bss+0x83): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\rpcnet.o:rpcnet.cpp:(.bss+0x70): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\rpcnet.o:rpcnet.cpp:(.bss+0x40): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\rpcnet.o:rpcnet.cpp:(.data+0x1c): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\rpcnet.o:rpcnet.cpp:(.bss+0x0): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\rpcnet.o:rpcnet.cpp:(.bss+0x28): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\rpcnet.o:rpcnet.cpp:(.bss+0x29): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\rpcnet.o:rpcnet.cpp:(.bss+0x2a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\rpcnet.o:rpcnet.cpp:(.bss+0x82): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\rpcnet.o:rpcnet.cpp:(.bss+0x83): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\rpcmining.o:rpcmining.cpp:(.bss+0x70): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\rpcmining.o:rpcmining.cpp:(.bss+0x40): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\rpcmining.o:rpcmining.cpp:(.data+0x1c): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\rpcmining.o:rpcmining.cpp:(.bss+0x0): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\rpcmining.o:rpcmining.cpp:(.bss+0x28): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\rpcmining.o:rpcmining.cpp:(.bss+0x29): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\rpcmining.o:rpcmining.cpp:(.bss+0x2a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\rpcmining.o:rpcmining.cpp:(.bss+0x82): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\rpcmining.o:rpcmining.cpp:(.bss+0x83): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\rpcwallet.o:rpcwallet.cpp:(.bss+0x90): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\rpcwallet.o:rpcwallet.cpp:(.bss+0x60): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\rpcwallet.o:rpcwallet.cpp:(.data+0x1c): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\rpcwallet.o:rpcwallet.cpp:(.bss+0x20): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\rpcwallet.o:rpcwallet.cpp:(.bss+0x48): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\rpcwallet.o:rpcwallet.cpp:(.bss+0x49): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\rpcwallet.o:rpcwallet.cpp:(.bss+0x4a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\rpcwallet.o:rpcwallet.cpp:(.bss+0xa2): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\rpcwallet.o:rpcwallet.cpp:(.bss+0xa3): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\rpcblockchain.o:rpcblockchain.cpp:(.bss+0x70): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\rpcblockchain.o:rpcblockchain.cpp:(.bss+0x40): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\rpcblockchain.o:rpcblockchain.cpp:(.data+0x1c): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\rpcblockchain.o:rpcblockchain.cpp:(.bss+0x0): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\rpcblockchain.o:rpcblockchain.cpp:(.bss+0x28): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\rpcblockchain.o:rpcblockchain.cpp:(.bss+0x29): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\rpcblockchain.o:rpcblockchain.cpp:(.bss+0x2a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\rpcblockchain.o:rpcblockchain.cpp:(.bss+0x82): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\rpcblockchain.o:rpcblockchain.cpp:(.bss+0x83): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\rpcrawtransaction.o:rpcrawtransaction.cpp:(.bss+0x70): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\rpcrawtransaction.o:rpcrawtransaction.cpp:(.bss+0x40): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\rpcrawtransaction.o:rpcrawtransaction.cpp:(.data+0x0): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\rpcrawtransaction.o:rpcrawtransaction.cpp:(.bss+0x0): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\rpcrawtransaction.o:rpcrawtransaction.cpp:(.bss+0x28): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\rpcrawtransaction.o:rpcrawtransaction.cpp:(.bss+0x29): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\rpcrawtransaction.o:rpcrawtransaction.cpp:(.bss+0x2a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\rpcrawtransaction.o:rpcrawtransaction.cpp:(.bss+0x82): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\rpcrawtransaction.o:rpcrawtransaction.cpp:(.bss+0x83): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\protocol.o:protocol.cpp:(.bss+0x70): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\protocol.o:protocol.cpp:(.bss+0x40): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\protocol.o:protocol.cpp:(.data+0x0): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\protocol.o:protocol.cpp:(.bss+0x0): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\protocol.o:protocol.cpp:(.bss+0x28): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\protocol.o:protocol.cpp:(.bss+0x29): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\protocol.o:protocol.cpp:(.bss+0x2a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\protocol.o:protocol.cpp:(.bss+0x82): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\protocol.o:protocol.cpp:(.bss+0x83): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\paymentserver.o:paymentserver.cpp:(.bss+0x0): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\paymentserver.o:paymentserver.cpp:(.bss+0x1): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\rpcconsole.o:rpcconsole.cpp:(.bss+0x0): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\rpcconsole.o:rpcconsole.cpp:(.bss+0x1): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\noui.o:noui.cpp:(.bss+0x70): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\noui.o:noui.cpp:(.bss+0x40): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\noui.o:noui.cpp:(.data+0x0): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\noui.o:noui.cpp:(.bss+0x0): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\noui.o:noui.cpp:(.bss+0x28): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\noui.o:noui.cpp:(.bss+0x29): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\noui.o:noui.cpp:(.bss+0x2a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\noui.o:noui.cpp:(.bss+0x82): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\noui.o:noui.cpp:(.bss+0x83): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\leveldb.o:leveldb.cpp:(.bss+0x0): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\leveldb.o:leveldb.cpp:(.bss+0x1): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\txdb.o:txdb.cpp:(.bss+0x70): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\txdb.o:txdb.cpp:(.bss+0x40): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\txdb.o:txdb.cpp:(.data+0x0): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\txdb.o:txdb.cpp:(.bss+0x0): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\txdb.o:txdb.cpp:(.bss+0x28): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\txdb.o:txdb.cpp:(.bss+0x29): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\txdb.o:txdb.cpp:(.bss+0x2a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\txdb.o:txdb.cpp:(.bss+0x82): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\txdb.o:txdb.cpp:(.bss+0x83): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\splashscreen.o:splashscreen.cpp:(.bss+0x0): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\splashscreen.o:splashscreen.cpp:(.bss+0x1): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\irc.o:irc.cpp:(.text+0x930): multiple definition of `RecvLine(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&)'
-./build_win32_objects\net.o:net.cpp:(.text+0x62f0): first defined here
-./build_win32_objects\irc.o:irc.cpp:(.bss+0x90): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\irc.o:irc.cpp:(.bss+0x60): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\irc.o:irc.cpp:(.bss+0xa3): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
-./build_win32_objects\irc.o:irc.cpp:(.bss+0xa2): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\irc.o:irc.cpp:(.data+0x0): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\irc.o:irc.cpp:(.bss+0x20): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\irc.o:irc.cpp:(.bss+0x48): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\irc.o:irc.cpp:(.bss+0x49): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\irc.o:irc.cpp:(.bss+0x4a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\namecoin.o:namecoin.cpp:(.bss+0xd0): multiple definition of `addrProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x70): first defined here
-./build_win32_objects\namecoin.o:namecoin.cpp:(.bss+0xa0): multiple definition of `bestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x40): first defined here
-./build_win32_objects\namecoin.o:namecoin.cpp:(.data+0x1c): multiple definition of `hListenSocket'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.data+0x0): first defined here
-./build_win32_objects\namecoin.o:namecoin.cpp:(.bss+0x60): multiple definition of `vnThreadsRunning'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x0): first defined here
-./build_win32_objects\namecoin.o:namecoin.cpp:(.bss+0x88): multiple definition of `fAllowDNS'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x28): first defined here
-./build_win32_objects\namecoin.o:namecoin.cpp:(.bss+0x89): multiple definition of `fClient'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x29): first defined here
-./build_win32_objects\namecoin.o:namecoin.cpp:(.bss+0x8a): multiple definition of `haveBestAddrLocal'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x2a): first defined here
-./build_win32_objects\namecoin.o:namecoin.cpp:(.bss+0xe2): multiple definition of `fUseProxy'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x82): first defined here
-./build_win32_objects\namecoin.o:namecoin.cpp:(.bss+0xe3): multiple definition of `ffShutdown'
-./build_win32_objects\bitcoin.o:bitcoin.cpp:(.bss+0x83): first defined here
 c:/mingw/bin/../lib/gcc/mingw32/6.3.0/../../../../mingw32/bin/ld.exe: cannot find -lqrencode
 c:/mingw/bin/../lib/gcc/mingw32/6.3.0/../../../../mingw32/bin/ld.exe: cannot find -lssl
 c:/mingw/bin/../lib/gcc/mingw32/6.3.0/../../../../mingw32/bin/ld.exe: cannot find -lcrypto

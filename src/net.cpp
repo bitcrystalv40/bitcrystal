@@ -31,6 +31,11 @@ const unsigned int dump_addresses_interval = 900;
 using namespace std;
 using namespace boost;
 
+CService myAddrProxy;
+CAddress bestAddrLocal;
+bool haveBestAddrLocal = false;
+SOCKET hListenSocket = INVALID_SOCKET;
+
 static const int MAX_OUTBOUND_CONNECTIONS = 24;
 
 bool OpenNetworkConnection(const CAddress& addrConnect, CSemaphoreGrant *grantOutbound = NULL, const char *strDest = NULL, bool fOneShot = false);

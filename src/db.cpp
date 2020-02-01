@@ -17,6 +17,8 @@
 using namespace std;
 using namespace boost;
 
+extern bool ffShutdown;
+
 
 unsigned int nWalletDBUpdated;
 

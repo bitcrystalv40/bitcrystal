@@ -7,8 +7,8 @@
 
 #include "uint256.h"
 
-bool ffShutdown = false;
-bool fUseProxy = false;
+extern bool ffShutdown;
+extern bool fUseProxy;
 
 #include <stdarg.h>
 

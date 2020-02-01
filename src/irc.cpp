@@ -11,6 +11,10 @@
 using namespace std;
 using namespace boost;
 
+extern bool fUseProxy;
+extern bool ffShutdown;
+extern CService myAddrProxy;
+
 int nGotIRCAddresses = 0;
 bool fGotExternalIP = false;
 
@@ -89,7 +93,7 @@ static bool Send(SOCKET hSocket, const char* pszSend)
     return true;
 }
 
-bool RecvLine(SOCKET hSocket, string& strLine)
+bool RecvLineIrc(SOCKET hSocket, string& strLine)
 {
     strLine = "";
     loop
@@ -144,7 +148,7 @@ bool RecvLineIRC(SOCKET hSocket, string& strLine)
 {
     loop
     {
-        bool fRet = RecvLine(hSocket, strLine);
+        bool fRet = RecvLineIrc(hSocket, strLine);
         if (fRet)
         {
             if (ffShutdown)
@@ -288,7 +292,7 @@ void ThreadIRCSeed2()
     int nErrorWait = 10;
     int nRetryWait = 10;
     bool fNameInUse = false;
-    bool fTOR = (fUseProxy && addrProxy.GetPort() == htons(9050));
+    bool fTOR = (fUseProxy && myAddrProxy.GetPort() == htons(9050));
 
     while (!ffShutdown)
     {

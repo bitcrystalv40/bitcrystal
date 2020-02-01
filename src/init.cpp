@@ -30,6 +30,9 @@
 using namespace std;
 using namespace boost;
 
+extern bool fUseProxy;
+extern CService myAddrProxy;
+
 CWallet* pwalletMain;
 CClientUIInterface uiInterface;
 
@@ -543,7 +546,7 @@ bool AppInit2(boost::thread_group& threadGroup)
 
     if (mapArgs.count("-proxy")) {
 		fUseProxy = true;
-		addrProxy = CService(mapArgs["-proxy"]);
+		myAddrProxy = CService(mapArgs["-proxy"]);
         // to protect privacy, do not listen by default if a proxy server is specified
         SoftSetBoolArg("-listen", false);
     }
@@ -760,30 +763,28 @@ if (IS_FREE != 1)
 #endif
 #endif
 
-    CService addrProxy;
-    bool fProxy = false;
     if (mapArgs.count("-proxy")) {
-        addrProxy = CService(mapArgs["-proxy"], 9070);
-        if (!addrProxy.IsValid())
+        myAddrProxy = CService(mapArgs["-proxy"], 9070);
+        if (!myAddrProxy.IsValid())
             return InitError(strprintf(_("Invalid -proxy address: '%s'"), mapArgs["-proxy"].c_str()));
 
         if (!IsLimited(NET_IPV4))
-            SetProxy(NET_IPV4, addrProxy, nSocksVersion);
+            SetProxy(NET_IPV4, myAddrProxy, nSocksVersion);
         if (nSocksVersion > 4) {
 #ifdef USE_IPV6
             if (!IsLimited(NET_IPV6))
-                SetProxy(NET_IPV6, addrProxy, nSocksVersion);
+                SetProxy(NET_IPV6, myAddrProxy, nSocksVersion);
 #endif
-            SetNameProxy(addrProxy, nSocksVersion);
+            SetNameProxy(myAddrProxy, nSocksVersion);
         }
-        fProxy = true;
+        fUseProxy = true;
     }
 
     // -tor can override normal proxy, -notor disables tor entirely
-    if (!(mapArgs.count("-tor") && mapArgs["-tor"] == "0") && (fProxy || mapArgs.count("-tor"))) {
+    if (!(mapArgs.count("-tor") && mapArgs["-tor"] == "0") && (fUseProxy || mapArgs.count("-tor"))) {
         CService addrOnion;
         if (!mapArgs.count("-tor"))
-            addrOnion = addrProxy;
+            addrOnion = myAddrProxy;
         else
             addrOnion = CService(mapArgs["-tor"], 9070);
         if (!addrOnion.IsValid())

@@ -25,13 +25,10 @@
 class CNode;
 class CBlockIndex;
 extern int nBestHeight;
-CService addrProxy;
-CAddress bestAddrLocal;
-bool haveBestAddrLocal = false;
-bool fClient = false;
-bool fAllowDNS = false;
-boost::array<int, 10> vnThreadsRunning;
-SOCKET hListenSocket = INVALID_SOCKET;
+extern CService myAddrProxy;
+extern CAddress bestAddrLocal;
+extern bool haveBestAddrLocal;
+extern SOCKET hListenSocket;
 
 
 
