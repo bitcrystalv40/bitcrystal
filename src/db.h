@@ -14,6 +14,7 @@
 #include <db_cxx.h>
 typedef std::vector<unsigned char> vchType;
 
+class CNameIndex;
 class CAddress;
 class CAddrMan;
 class CBlockLocator;
@@ -22,6 +23,32 @@ class CMasterKey;
 class COutPoint;
 class CWallet;
 class CWalletTx;
+
+class CNameIndex
+{
+public:
+    CDiskTxPos txPos;
+    unsigned int nHeight;
+    std::vector<unsigned char> vValue;
+
+    CNameIndex()
+    {
+    }
+
+    CNameIndex(CDiskTxPos txPosIn, unsigned int nHeightIn, std::vector<unsigned char> vValueIn)
+    {
+        txPos = txPosIn;
+        nHeight = nHeightIn;
+        vValue = vValueIn;
+    }
+
+    IMPLEMENT_SERIALIZE
+    (
+        READWRITE(txPos);
+        READWRITE(nHeight);
+        READWRITE(vValue);
+    )
+};
 
 extern unsigned int nWalletDBUpdated;
 
@@ -308,41 +335,6 @@ public:
     bool static Rewrite(const std::string& strFile, const char* pszSkip = NULL);
 };
 
-class CTxDB : public CDB
-{
-public:
-    CTxDB(const char* pszMode="r+") : CDB("blkindex.dat", pszMode) { }
-private:
-    CTxDB(const CTxDB&);
-    void operator=(const CTxDB&);
-public:
-    bool ReadTxIndex(uint256 hash, CTxIndex& txindex);
-    bool UpdateTxIndex(uint256 hash, const CTxIndex& txindex);
-    bool AddTxIndex(const CTransaction& tx, const CDiskTxPos& pos, int nHeight);
-    bool EraseTxIndex(const CTransaction& tx);
-    bool ContainsTx(uint256 hash);
-    bool ReadDiskTx(uint256 hash, CTransaction& tx, CTxIndex& txindex);
-    bool ReadDiskTx(uint256 hash, CTransaction& tx);
-    bool ReadDiskTx(COutPoint outpoint, CTransaction& tx, CTxIndex& txindex);
-    bool ReadDiskTx(COutPoint outpoint, CTransaction& tx);
-    bool WriteBlockIndex(const CDiskBlockIndex& blockindex);
-    bool EraseBlockIndex(uint256 hash);
-    bool ReadHashBestChain(uint256& hashBestChain);
-    bool WriteHashBestChain(uint256 hashBestChain);
-    bool ReadBestInvalidWork(CBigNum& bnBestInvalidWork);
-    bool WriteBestInvalidWork(CBigNum bnBestInvalidWork);
-
-    /* Read/write number of "reserved" (but not yet used) bytes in the
-       block files.  */
-    unsigned ReadBlockFileReserved (unsigned num);
-    bool WriteBlockFileReserved (unsigned num, unsigned size);
-
-    bool LoadBlockIndex();
-
-    /* Update txindex to new data format.  */
-    bool RewriteTxIndex (int oldVersion);
-};
-
 /**
  * Name index.  Non-inline implementation code is in namecoin.cpp, but the
  * class is declared here because it will be used for the "wrapper" database
@@ -376,7 +368,6 @@ public:
     bool ScanNames(
             const vchType& vchName,
             int nMax,
-            std::vector<std::pair<vchType, CNameIndex> >& nameScan);
             std::vector<std::pair<vchType, CNameIndex> >& nameScan);
 
     bool test();

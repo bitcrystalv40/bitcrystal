@@ -26,6 +26,7 @@ class CDiskTxPos;
 class uint256;
 
 extern std::map<vchType, uint256> mapMyNames;
+extern std::map<uint256, CDiskTxPos> mapTestPool;
 extern std::map<vchType, std::set<uint256> > mapNamePending;
 extern std::set<vchType> setNewHashes;
 

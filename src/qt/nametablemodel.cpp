@@ -69,11 +69,8 @@ public:
 
         std::map<vchType, NameTableEntry> vNamesO;
 
-        CRITICAL_BLOCK(cs_main)
-        CRITICAL_BLOCK(wallet->cs_mapWallet)
         {
-            CTxDB txdb("r");
-
+			LOCK2(cs_main, wallet->cs_mapWallet);
             BOOST_FOREACH(PAIRTYPE(const uint256, CWalletTx)& item, wallet->mapWallet)
             {
                 const CWalletTx& tx = item.second;
@@ -132,9 +129,9 @@ public:
     {
         NameTableEntry nameObj(stringFromVch(inName), std::string(), std::string(), NameTableEntry::NAME_NON_EXISTING);
 
-        CRITICAL_BLOCK(cs_main)
-        CRITICAL_BLOCK(wallet->cs_mapWallet)
         {
+			LOCK(cs_main);
+			LOCK(wallet->cs_mapWallet);
             CTxIndex txindex;
             uint256 hash;
             CTxDB txdb("r");

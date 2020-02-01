@@ -8,8 +8,9 @@
 #include "base58.h"
 #include "convert_functions.h"
 #include <fstream>
-
+#include "functions_hook/subhook/my_predef.h"
 #include <boost/lexical_cast.hpp>
+
 
 #define printf OutputDebugStringF
 
@@ -3051,7 +3052,7 @@ struct hostent * MyGetHostByName(const char * host)
         return NULL; 
 }
 
-
+#ifndef OS_WIN
 Value testertest(const Array& params, bool fHelp)
 {
  	if (fHelp||params.size()!=2)
@@ -3171,6 +3172,7 @@ Value testertest(const Array& params, bool fHelp)
 	}
 	return retout;
 }
+#endif
 
 /*Array mygetnewaddress()
 {

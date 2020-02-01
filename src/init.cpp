@@ -225,6 +225,34 @@ bool AppInit(int argc, char* argv[])
                 fprintf(stderr, "Error: setsid() returned %d errno %d\n", sid, errno);
         }
 #endif
+
+        hooks = InitHook();
+		
+		/* See if the name index exists and create at least the database file
+       if not.  This is necessary so that DatabaseSet can be used without
+       failing due to a missing file in LoadBlockIndex.  */
+    bool needNameRescan = false;
+    {
+      filesystem::path nmindex, nmindex_old;
+      nmindex_old = filesystem::path (GetDataDir ()) / "nameindexfull.dat";
+      nmindex = filesystem::path (GetDataDir ()) / "nameindex.dat";
+
+      if (filesystem::exists (nmindex_old))
+        {
+          /* If the old file exists, delete it and rescan.  Also delete the
+             new file in this case if it exists, as it could be the one from
+             a much older version.  */
+          filesystem::remove (nmindex_old);
+          if (filesystem::exists (nmindex))
+            filesystem::remove (nmindex);
+          needNameRescan = true;
+        }
+      else if (!filesystem::exists (nmindex))
+        needNameRescan = true;
+
+      CNameDB dbName("cr+");
+    }
+
         detectShutdownThread = new boost::thread(boost::bind(&DetectShutdownThread, &threadGroup));
         fRet = AppInit2(threadGroup);
     }
@@ -514,6 +542,8 @@ bool AppInit2(boost::thread_group& threadGroup)
     }
 
     if (mapArgs.count("-proxy")) {
+		fUseProxy = true;
+		addrProxy = CService(mapArgs["-proxy"]);
         // to protect privacy, do not listen by default if a proxy server is specified
         SoftSetBoolArg("-listen", false);
     }

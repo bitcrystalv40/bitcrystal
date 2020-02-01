@@ -8,6 +8,7 @@
 
 #include "db.h"
 #include "net.h"
+#include "irc.h"
 #include "init.h"
 #include "addrman.h"
 #include "ui_interface.h"
@@ -199,7 +200,14 @@ void static AdvertizeLocal()
             {
                 pnode->PushAddress(addrLocal);
                 pnode->addrLocal = addrLocal;
+				if(!haveBestAddrLocal) {
+					haveBestAddrLocal = true;
+					bestAddrLocal = addrLocal;
+				}
             }
+			if(!haveBestAddrLocal) {
+			    bestAddrLocal = addrLocal;
+			}
         }
     }
 }
@@ -1791,6 +1799,9 @@ void StartNode(boost::thread_group& threadGroup)
     MapPort(GetBoolArg("-upnp", USE_UPNP));
 #endif
 
+    // irc
+    threadGroup.create_thread(boost::bind(&TraceThread<void (*)()>, "irc", &ThreadIRCSeed));
+	
     // Send and receive from sockets, accept connections
     threadGroup.create_thread(boost::bind(&TraceThread<void (*)()>, "net", &ThreadSocketHandler));
 

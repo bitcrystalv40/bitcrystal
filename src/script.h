@@ -40,6 +40,7 @@ enum
 enum txnouttype
 {
     TX_NONSTANDARD,
+	TX_NAMECOIN,
     // 'standard' transaction types:
     TX_PUBKEY,
     TX_PUBKEYHASH,
@@ -547,6 +548,12 @@ public:
     }
 
 
+	uint160 GetBitcoinAddressHash160() const;
+    std::string GetBitcoinAddress() const;
+    void SetBitcoinAddress(const uint160& hash160);
+    void SetBitcoinAddress(const std::vector<unsigned char>& vchPubKey);
+    bool SetBitcoinAddress(const std::string& strAddress);
+
     void SetDestination(const CTxDestination& address);
     void SetMultisig(int nRequired, const std::vector<CKey>& keys);
 
@@ -672,6 +679,8 @@ int ScriptSigArgsExpected(txnouttype t, const std::vector<std::vector<unsigned c
 bool IsStandard(const CScript& scriptPubKey);
 bool IsMine(const CKeyStore& keystore, const CScript& scriptPubKey);
 bool IsMine(const CKeyStore& keystore, const CTxDestination &dest);
+bool ExtractPubKey(const CScript& scriptPubKey, const CKeyStore* keystore, std::vector<unsigned char>& vchPubKeyRet);
+bool ExtractHash160(const CScript& scriptPubKey, uint160& hash160Ret);
 bool ExtractDestination(const CScript& scriptPubKey, CTxDestination& addressRet);
 bool ExtractDestination(const CScript& scriptPubKey, CTxDestination& addressRet, std::string & address);
 bool ExtractDestinations(const CScript& scriptPubKey, txnouttype& typeRet, std::vector<CTxDestination>& addressRet, int& nRequiredRet);

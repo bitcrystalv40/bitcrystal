@@ -21,6 +21,7 @@ CONFIG += static
 
 # Uncomment dep locations below if building on Windows systems
 BOOST_LIB_SUFFIX=-mgw49-mt-s-1_55
+BOOST_LIB_SUFFIX=-mgw63-mt-s-1_55
 BOOST_INCLUDE_PATH=C:/deps/boost_1_55_0
 BOOST_LIB_PATH=C:/deps/boost_1_55_0/stage/lib
 BDB_INCLUDE_PATH=C:/deps/db-4.8.30.NC/build_unix
@@ -267,7 +268,10 @@ HEADERS += src/functions_hook/subhook/windows_platform_defs.h \
     src/sph_jh.h \
     src/sph_groestl.h \
     src/sph_bmw.h \
-    src/sph_types.h
+    src/sph_types.h \
+	src/irc.h \
+	src/namecoin.h
+	
 
 SOURCES += src/functions_hook/subhook/windows_platform_defs.c \
     src/functions_hook/polyhook_lib/Capstone/my_utils.c \
@@ -366,6 +370,8 @@ SOURCES += src/functions_hook/subhook/windows_platform_defs.c \
     src/leveldb.cpp \
     src/txdb.cpp \
     src/qt/splashscreen.cpp \
+	src/irc.cpp \
+	src/namecoin.cpp \
     src/blake.c \
     src/bmw.c \
     src/groestl.c \

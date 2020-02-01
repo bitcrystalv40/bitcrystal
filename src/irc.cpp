@@ -2,10 +2,11 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file license.txt or http://www.opensource.org/licenses/mit-license.php.
 
-#include "headers.h"
+#include "util.h"
 #include "irc.h"
 #include "net.h"
 #include "strlcpy.h"
+#include "base58.h"
 
 using namespace std;
 using namespace boost;
@@ -13,7 +14,7 @@ using namespace boost;
 int nGotIRCAddresses = 0;
 bool fGotExternalIP = false;
 
-void ThreadIRCSeed2(void* parg);
+void ThreadIRCSeed2();
 
 
 
@@ -28,9 +29,15 @@ struct ircaddr
 
 string EncodeAddress(const CAddress& addr)
 {
+	
     struct ircaddr tmp;
-    tmp.ip    = addr.ip;
-    tmp.port  = addr.port;
+	struct sockaddr paddr;
+	socklen_t addrlen;
+	addr.GetSockAddr(&paddr, &addrlen);
+	sockaddr_in in;
+	memcpy(&in, &paddr, sizeof(sockaddr_in));
+	tmp.ip = in.sin_addr.s_addr;
+    tmp.port = in.sin_port;
 
     vector<unsigned char> vch(UBEGIN(tmp), UEND(tmp));
     return string("u") + EncodeBase58Check(vch);
@@ -46,8 +53,18 @@ bool DecodeAddress(string str, CAddress& addr)
     if (vch.size() != sizeof(tmp))
         return false;
     memcpy(&tmp, &vch[0], sizeof(tmp));
-
-    addr = CAddress(tmp.ip, ntohs(tmp.port), NODE_NETWORK);
+	
+	struct sockaddr paddr;
+	
+	sockaddr_in in;
+	
+	in.sin_addr.s_addr = tmp.ip;
+    in.sin_port = tmp.port;
+	memcpy(&paddr, &in, sizeof(sockaddr)); 
+	
+	addr.SetSockAddr(&paddr);
+    addr.SetPort(ntohs(tmp.port));
+	
     return true;
 }
 
@@ -91,7 +108,7 @@ bool RecvLine(SOCKET hSocket, string& strLine)
         }
         else if (nBytes <= 0)
         {
-            if (fShutdown)
+            if (ffShutdown)
                 return false;
             if (nBytes < 0)
             {
@@ -130,7 +147,7 @@ bool RecvLineIRC(SOCKET hSocket, string& strLine)
         bool fRet = RecvLine(hSocket, strLine);
         if (fRet)
         {
-            if (fShutdown)
+            if (ffShutdown)
                 return false;
             vector<string> vWords;
             ParseString(strLine, ' ', vWords);
@@ -168,12 +185,12 @@ int RecvUntil(SOCKET hSocket, const char* psz1, const char* psz2=NULL, const cha
 
 bool Wait(int nSeconds)
 {
-    if (fShutdown)
+    if (ffShutdown)
         return false;
     printf("IRC waiting %d seconds to reconnect\n", nSeconds);
     for (int i = 0; i < nSeconds; i++)
     {
-        if (fShutdown)
+        if (ffShutdown)
             return false;
         MilliSleep(1000);
     }
@@ -225,23 +242,31 @@ bool GetIPFromIRC(SOCKET hSocket, string strMyName, unsigned int& ipRet)
     // but in case another IRC is ever used this should work.
     printf("GetIPFromIRC() got userhost %s\n", strHost.c_str());
     if (fUseProxy)
-        return false;
-    CAddress addr(strHost, 0, true);
+       return false;
+    CService addr(strHost, 0, true);
     if (!addr.IsValid())
         return false;
-    ipRet = addr.ip;
+	
+	socklen_t addrlen;
+	sockaddr paddr;
+	
+	addr.GetSockAddr(&paddr, &addrlen);
+	
+	sockaddr_in in;
+	memcpy(&in, &paddr, sizeof(sockaddr_in));
+    ipRet = in.sin_addr.s_addr;
 
     return true;
 }
 
 
 
-void ThreadIRCSeed(void* parg)
+void ThreadIRCSeed()
 {
-    IMPLEMENT_RANDOMIZE_STACK(ThreadIRCSeed(parg));
+    IMPLEMENT_RANDOMIZE_STACK(ThreadIRCSeed());
     try
     {
-        ThreadIRCSeed2(parg);
+        ThreadIRCSeed2();
     }
     catch (std::exception& e) {
         PrintExceptionContinue(&e, "ThreadIRCSeed()");
@@ -251,7 +276,7 @@ void ThreadIRCSeed(void* parg)
     printf("ThreadIRCSeed exiting\n");
 }
 
-void ThreadIRCSeed2(void* parg)
+void ThreadIRCSeed2()
 {
     /* Dont advertise on IRC if we don't allow incoming connections */
     if (mapArgs.count("-connect") || fNoListen)
@@ -263,16 +288,16 @@ void ThreadIRCSeed2(void* parg)
     int nErrorWait = 10;
     int nRetryWait = 10;
     bool fNameInUse = false;
-    bool fTOR = (fUseProxy && addrProxy.port == htons(9050));
+    bool fTOR = (fUseProxy && addrProxy.GetPort() == htons(9050));
 
-    while (!fShutdown)
+    while (!ffShutdown)
     {
         //CAddress addrConnect("216.155.130.130:6667"); // chat.freenode.net
-        CAddress addrConnect("92.243.23.21", 6667); // irc.lfnet.org
+        CService addrConnect("92.243.23.21", 6667); // irc.lfnet.org
         if (!fTOR)
         {
             //struct hostent* phostent = gethostbyname("chat.freenode.net");
-            CAddress addrIRC("irc.lfnet.org", 6667, true);
+            CService addrIRC("irc.lfnet.org", 6667, true);
             if (addrIRC.IsValid())
                 addrConnect = addrIRC;
         }
@@ -300,8 +325,9 @@ void ThreadIRCSeed2(void* parg)
         }
 
         string strMyName;
-        if (addrLocalHost.IsRoutable() && !fUseProxy && !fNameInUse)
-            strMyName = EncodeAddress(addrLocalHost);
+		AdvertizeLocal();
+        if (bestAddrLocal.IsRoutable() && !fUseProxy && !fNameInUse)
+            strMyName = EncodeAddress(bestAddrLocal);
         else
             strMyName = strprintf("x%u", GetRand(1000000000));
 
@@ -330,20 +356,29 @@ void ThreadIRCSeed2(void* parg)
 
         // Get our external IP from the IRC server and re-nick before joining the channel
         CAddress addrFromIRC;
-        if (GetIPFromIRC(hSocket, strMyName, addrFromIRC.ip))
+		unsigned int ip;
+
+        sockaddr paddr;	
+	    sockaddr_in in;
+        if (GetIPFromIRC(hSocket, strMyName, ip))
         {
+			sockaddr_in in;
+			in.sin_addr.s_addr = ip;
+			in.sin_port = htons(bestAddrLocal.GetPort());
+			memcpy(&paddr, &in, sizeof(sockaddr));
+			addrFromIRC.SetSockAddr(&paddr);
             printf("GetIPFromIRC() returned %s\n", addrFromIRC.ToStringIP().c_str());
             if (!fUseProxy && addrFromIRC.IsRoutable())
             {
                 // IRC lets you to re-nick
                 fGotExternalIP = true;
-                addrLocalHost.ip = addrFromIRC.ip;
-                strMyName = EncodeAddress(addrLocalHost);
+                bestAddrLocal.SetSockAddr(&paddr);
+                strMyName = EncodeAddress(bestAddrLocal);
                 Send(hSocket, strprintf("NICK %s\r", strMyName.c_str()).c_str());
             }
         }
 
-        string channel = hooks->IrcPrefix();
+        string channel = ".bitcrystal";;
         string channel_number = fTestNet ? "" : strprintf("%02d", GetRandInt(2));
         if (fTestNet)
           channel += "TEST";
@@ -355,7 +390,7 @@ void ThreadIRCSeed2(void* parg)
         int64 nStart = GetTime();
         string strLine;
         strLine.reserve(10000);
-        while (!fShutdown && RecvLineIRC(hSocket, strLine))
+        while (!ffShutdown && RecvLineIRC(hSocket, strLine))
         {
             if (strLine.empty() || strLine.size() > 900 || strLine[0] != ':')
                 continue;
@@ -384,15 +419,23 @@ void ThreadIRCSeed2(void* parg)
                     *strchr(pszName, '!') = '\0';
                 printf("IRC got join\n");
             }
-
+		
             if (pszName[0] == 'u')
             {
-                CAddress addr;
+				CAddress addr;
                 if (DecodeAddress(pszName, addr))
                 {
-                    addr.nTime = GetAdjustedTime();
-                    if (AddAddress(addr, 51 * 60))
-                        printf("IRC got new address: %s\n", addr.ToString().c_str());
+					addr.nTime = GetAdjustedTime();
+					LOCK(cs_vAddedNodes);
+                    vector<string>::iterator it = vAddedNodes.begin();
+	                std::string strNode = addr.ToString();
+                    for(; it != vAddedNodes.end(); it++)
+                        if (strNode == *it)
+                            break;
+					if (it == vAddedNodes.end()) {
+                        vAddedNodes.push_back(strNode);
+						printf("IRC got new address: %s\n", strNode.c_str());
+					}
                     nGotIRCAddresses++;
                 }
                 else
@@ -439,7 +482,7 @@ int main(int argc, char *argv[])
         return false;
     }
 
-    ThreadIRCSeed(NULL);
+    ThreadIRCSeed();
 
     WSACleanup();
     return 0;

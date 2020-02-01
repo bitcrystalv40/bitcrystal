@@ -7,7 +7,55 @@
 
 #include "uint256.h"
 
+bool ffShutdown = false;
+bool fUseProxy = false;
+
 #include <stdarg.h>
+
+#ifdef WIN32
+#include <windows.h>
+#include <winsock2.h>
+#include <mswsock.h>
+
+#ifndef UINT64_MAX
+#define UINT64_MAX          _UI64_MAX
+#define INT64_MAX           _I64_MAX
+#define INT64_MIN           _I64_MIN
+#endif
+#ifndef S_IRUSR
+#define S_IRUSR             0400
+#define S_IWUSR             0200
+#endif
+#define unlink              _unlink
+typedef int socklen_t;
+#else
+#define WSAGetLastError()   errno
+#define WSAEINVAL           EINVAL
+#define WSAEALREADY         EALREADY
+#define WSAEWOULDBLOCK      EWOULDBLOCK
+#define WSAEMSGSIZE         EMSGSIZE
+#define WSAEINTR            EINTR
+#define WSAEINPROGRESS      EINPROGRESS
+#define WSAEADDRINUSE       EADDRINUSE
+#define WSAENOTSOCK         EBADF
+#define INVALID_SOCKET      (SOCKET)(~0)
+#define SOCKET_ERROR        -1
+typedef u_int SOCKET;
+#define _vsnprintf(a,b,c,d) vsnprintf(a,b,c,d)
+#define strlwr(psz)         to_lower(psz)
+#define _strlwr(psz)        to_lower(psz)
+#define MAX_PATH            1024
+#define Beep(n1,n2)         (0)
+#endif
+
+#if defined(WIN32) || defined(__APPLE__)
+#   ifndef MSG_NOSIGNAL
+#       define MSG_NOSIGNAL        0
+#   endif
+#   ifndef MSG_DONTWAIT
+#       define MSG_DONTWAIT        0
+#   endif
+#endif
 
 #ifndef WIN32
 #include <sys/types.h>
@@ -42,6 +90,26 @@ static const int64 CENT = COIN / 100;
 #define UBEGIN(a)           ((unsigned char*)&(a))
 #define UEND(a)             ((unsigned char*)&((&(a))[1]))
 #define ARRAYLEN(array)     (sizeof(array)/sizeof((array)[0]))
+
+// Randomize the stack to help protect against buffer overrun exploits
+#define IMPLEMENT_RANDOMIZE_STACK(ThreadFn)     \
+    {                                           \
+        static char nLoops;                     \
+        if (nLoops <= 0)                        \
+            nLoops = GetRand(20) + 1;           \
+        if (nLoops-- > 1)                       \
+        {                                       \
+            ThreadFn;                           \
+            return;                             \
+        }                                       \
+    }
+
+#define CATCH_PRINT_EXCEPTION(pszFn)     \
+    catch (std::exception& e) {          \
+        PrintException(&e, (pszFn));     \
+    } catch (...) {                      \
+        PrintException(NULL, (pszFn));   \
+    }
 
 #ifndef PRI64d
 #if defined(_MSC_VER) || defined(__MSVCRT__)

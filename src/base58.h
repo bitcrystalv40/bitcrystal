@@ -167,8 +167,26 @@ inline bool DecodeBase58Check(const std::string& str, std::vector<unsigned char>
 {
     return DecodeBase58Check(str.c_str(), vchRet);
 }
+extern unsigned char GetAddressVersion();
 
+inline bool AddressToHash160(const char* psz, uint160& hash160Ret)
+{
+    std::vector<unsigned char> vch;
+    if (!DecodeBase58Check(psz, vch))
+        return false;
+    if (vch.empty())
+        return false;
+    unsigned char nVersion = vch[0];
+    if (vch.size() != sizeof(hash160Ret) + 1)
+        return false;
+    memcpy(&hash160Ret, &vch[1], sizeof(hash160Ret));
+    return (nVersion == GetAddressVersion());
+}
 
+inline bool AddressToHash160(const std::string& str, uint160& hash160Ret)
+{
+    return AddressToHash160(str.c_str(), hash160Ret);
+}
 
 
 

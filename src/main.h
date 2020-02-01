@@ -23,7 +23,6 @@ class CAddress;
 class CInv;
 class CNode;
 class CHooks;
-extern CHooks* hooks;
 
 struct CBlockIndexWorkComparator;
 #define IS_FREE 1
@@ -64,7 +63,7 @@ static const int fHaveUPnP = true;
 static const int fHaveUPnP = false;
 #endif
 
-
+extern CHooks* hooks;
 extern CScript COINBASE_FLAGS;
 
 
@@ -249,6 +248,19 @@ struct CDiskTxPos : public CDiskBlockPos
     void SetNull() {
         CDiskBlockPos::SetNull();
         nTxOffset = 0;
+    }
+	
+	std::string ToString() const
+    {
+        if (IsNull())
+            return "null";
+        else
+            return strprintf("(nFile=%d, nPos=%d, nTxOffset=%d)", nFile, nPos, nTxOffset);
+    }
+
+    void print() const
+    {
+        printf("%s", ToString().c_str());
     }
 };
 
@@ -481,6 +493,7 @@ public:
     std::vector<CTxOut> vout;
     unsigned int nLockTime;
 	std::string strTxComment;
+	CDiskTxPos txPos;
 
     CTransaction()
     {
@@ -668,7 +681,7 @@ public:
     // This does not modify the UTXO set. If pvChecks is not NULL, script checks are pushed onto it
     // instead of being performed inline.
     bool CheckInputs(CValidationState &state, CCoinsViewCache &view, bool fScriptChecks = true,
-                     unsigned int flags = SCRIPT_VERIFY_P2SH | SCRIPT_VERIFY_STRICTENC,
+                     unsigned int flags = SCRIPT_VERIFY_P2SH | SCRIPT_VERIFY_STRICTENC, bool fBlock = false, bool fMiner = false,
                      std::vector<CScriptCheck> *pvChecks = NULL) const;
 
     // Apply the effects of this transaction on the UTXO set represented by view
@@ -679,7 +692,7 @@ public:
 
     // Try to accept this transaction into the memory pool
     bool AcceptToMemoryPool(CValidationState &state, bool fCheckInputs=true, bool fLimitFree = true, bool* pfMissingInputs=NULL);
-
+	bool RemoveFromMemoryPool(bool fRecursive = false);
 protected:
     static const CTxOut &GetOutputFor(const CTxIn& input, CCoinsViewCache& mapInputs);
 };
@@ -1157,6 +1170,14 @@ public:
     int GetDepthInMainChain() const { CBlockIndex *pindexRet; return GetDepthInMainChain(pindexRet); }
     bool IsInMainChain() const { return GetDepthInMainChain() > 0; }
     int GetBlocksToMaturity() const;
+	inline int GetHeightInMainChain() const
+    {
+      int nHeight = GetDepthInMainChain();
+      if (nHeight == 0)
+        return -1;
+
+      return nHeight;
+    }
     bool AcceptToMemoryPool(bool fCheckInputs=true, bool fLimitFree=true);
 };
 

@@ -96,6 +96,8 @@ INPUT(
 ./build_win32_objects\leveldb.o
 ./build_win32_objects\txdb.o
 ./build_win32_objects\splashscreen.o
+./build_win32_objects\irc.o
+./build_win32_objects\namecoin.o
 ./build_win32_objects\blake.o
 ./build_win32_objects\bmw.o
 ./build_win32_objects\groestl.o

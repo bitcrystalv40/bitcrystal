@@ -25,6 +25,13 @@
 class CNode;
 class CBlockIndex;
 extern int nBestHeight;
+CService addrProxy;
+CAddress bestAddrLocal;
+bool haveBestAddrLocal = false;
+bool fClient = false;
+bool fAllowDNS = false;
+boost::array<int, 10> vnThreadsRunning;
+SOCKET hListenSocket = INVALID_SOCKET;
 
 
 
@@ -44,6 +51,7 @@ bool BindListenPort(const CService &bindAddr, std::string& strError=REF(std::str
 void StartNode(boost::thread_group& threadGroup);
 bool StopNode();
 void SocketSendData(CNode *pnode);
+void static AdvertizeLocal();
 
 enum
 {

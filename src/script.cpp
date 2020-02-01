@@ -8,6 +8,7 @@
 using namespace std;
 using namespace boost;
 
+#include "base58.h"
 #include "script.h"
 #include "keystore.h"
 #include "bignum.h"
@@ -79,6 +80,7 @@ const char* GetTxnOutputType(txnouttype t)
     case TX_PUBKEYHASH: return "pubkeyhash";
     case TX_SCRIPTHASH: return "scripthash";
     case TX_MULTISIG: return "multisig";
+	case TX_NAMECOIN: return "namecoin";
     }
     return NULL;
 }
@@ -1417,6 +1419,89 @@ bool IsMine(const CKeyStore &keystore, const CScript& scriptPubKey)
     }
     }
     return false;
+}
+
+bool ExtractPubKey(const CScript& scriptPubKey, const CKeyStore* keystore, vector<unsigned char>& vchPubKeyRet)
+{
+	vchPubKeyRet.clear();
+	
+	vector<valtype> vSolutions;
+    txnouttype whichType;
+    if (!Solver(scriptPubKey, whichType, vSolutions)) {
+        return false;
+	}
+
+    if (whichType == TX_PUBKEY)
+    {
+        vchPubKeyRet = vSolutions[0];
+		return true;
+    }
+    else if (whichType == TX_PUBKEYHASH && keystore)
+    {
+		CPubKey k;
+		keystore->GetPubKey(CKeyID(uint160(vSolutions[0])), k);
+        vchPubKeyRet = k.Raw();
+		return true;
+    }
+	
+    return false;
+}
+
+
+bool ExtractHash160(const CScript& scriptPubKey, uint160& hash160Ret)
+{
+	vector<valtype> vSolutions;
+    txnouttype whichType;
+    if (!Solver(scriptPubKey, whichType, vSolutions)) {
+        return false;
+	}
+
+    if (whichType == TX_PUBKEYHASH)
+    {
+        hash160Ret = uint160(vSolutions[0]);
+        return true;
+    }
+    return false;
+}
+
+uint160 CScript::GetBitcoinAddressHash160() const
+{
+    uint160 hash160;
+    if (ExtractHash160(*this, hash160))
+        return hash160;
+    vector<unsigned char> vch;
+    if (ExtractPubKey(*this, NULL, vch))
+        return Hash160(vch);
+    return 0;
+}
+
+std::string CScript::GetBitcoinAddress() const
+{
+    uint160 hash160 = this->GetBitcoinAddressHash160();
+    if (hash160 == 0)
+        return "";
+    return CBitcoinAddress(CKeyID(hash160)).ToString();
+}
+
+void CScript::SetBitcoinAddress(const uint160& hash160)
+{
+    this->SetDestination(CKeyID(hash160));
+}
+
+void CScript::SetBitcoinAddress(const std::vector<unsigned char>& vchPubKey)
+{
+    this->SetBitcoinAddress(Hash160(vchPubKey));
+}
+
+bool CScript::SetBitcoinAddress(const std::string& strAddress)
+{
+	CKeyID keyID;
+    bool read = CBitcoinAddress(strAddress).GetKeyID(keyID);
+	if(read) {
+		this->SetDestination(keyID);
+		return true;
+	}
+	return false;
 }
 
 bool ExtractDestination(const CScript& scriptPubKey, CTxDestination& addressRet)

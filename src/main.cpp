@@ -799,7 +799,7 @@ bool CTxMemPool::accept(CValidationState &state, CTransaction &tx, bool fCheckIn
 
         // Check against previous transactions
         // This is done last to help prevent CPU exhaustion denial-of-service attacks.
-        if (!tx.CheckInputs(state, view, true, SCRIPT_VERIFY_P2SH | SCRIPT_VERIFY_STRICTENC))
+        if (!tx.CheckInputs(state, view, true, SCRIPT_VERIFY_P2SH | SCRIPT_VERIFY_STRICTENC, false, false))
         {
             return error("CTxMemPool::accept() : ConnectInputs failed %s", hash.ToString().c_str());
         }
@@ -808,6 +808,8 @@ bool CTxMemPool::accept(CValidationState &state, CTransaction &tx, bool fCheckIn
     // Store transaction in memory
     {
         LOCK(cs);
+		if (!hooks->AcceptToMemoryPool (tx))
+			return false;
         if (ptxOld)
         {
             printf("CTxMemPool::accept() : replacing tx %s with new version\n", ptxOld->GetHash().ToString().c_str());
@@ -850,12 +852,16 @@ bool CTxMemPool::addUnchecked(const uint256& hash, CTransaction &tx)
     return true;
 }
 
+bool CTransaction::RemoveFromMemoryPool(bool fRecursive) {
+	return mempool.remove(*this, fRecursive);
+}
 
 bool CTxMemPool::remove(const CTransaction &tx, bool fRecursive)
 {
     // Remove transaction from memory pool
     {
         LOCK(cs);
+		hooks->RemoveFromMemoryPool(tx);
         uint256 hash = tx.GetHash();
         if (mapTx.count(hash))
         {
@@ -1438,7 +1444,7 @@ bool VerifySignature(const CCoins& txFrom, const CTransaction& txTo, unsigned in
     return CScriptCheck(txFrom, txTo, nIn, flags, nHashType)();
 }
 
-bool CTransaction::CheckInputs(CValidationState &state, CCoinsViewCache &inputs, bool fScriptChecks, unsigned int flags, std::vector<CScriptCheck> *pvChecks) const
+bool CTransaction::CheckInputs(CValidationState &state, CCoinsViewCache &inputs, bool fScriptChecks, unsigned int flags, bool fBlock, bool fMiner, std::vector<CScriptCheck> *pvChecks) const
 {
     if (!IsCoinBase())
     {
@@ -1476,7 +1482,7 @@ bool CTransaction::CheckInputs(CValidationState &state, CCoinsViewCache &inputs,
         if (nValueIn < GetValueOut())
             return state.DoS(100, error("CheckInputs() : %s value in < value out", GetHash().ToString().c_str()));
 
-        if (!hooks->ConnectInputs (*this, inputs.GetBestBlock(), posThisTx);
+        if (!hooks->ConnectInputs (*this, inputs.GetBestBlock(), fBlock, fMiner))
             return false;
         // Tally transaction fees
         int64 nTxFee = nValueIn - GetValueOut();
@@ -1700,8 +1706,9 @@ bool CBlock::ConnectBlock(CValidationState &state, CBlockIndex* pindex, CCoinsVi
     vPos.reserve(vtx.size());
     for (unsigned int i=0; i<vtx.size(); i++)
     {
+		vtx[i].txPos = pos;
         const CTransaction &tx = vtx[i];
-
+		
         nInputs += tx.vin.size();
         nSigOps += tx.GetLegacySigOpCount();
         if (nSigOps > MAX_BLOCK_SIGOPS)
@@ -1725,7 +1732,7 @@ bool CBlock::ConnectBlock(CValidationState &state, CBlockIndex* pindex, CCoinsVi
             nFees += tx.GetValueIn(view)-tx.GetValueOut();
 
             std::vector<CScriptCheck> vChecks;
-            if (!tx.CheckInputs(state, view, fScriptChecks, flags, nScriptCheckThreads ? &vChecks : NULL))
+            if (!tx.CheckInputs(state, view, fScriptChecks, flags, true, false, nScriptCheckThreads ? &vChecks : NULL))
                 return false;
             control.Add(vChecks);
         }
@@ -4428,7 +4435,7 @@ CBlockTemplate* CreateNewBlock(CReserveKey& reservekey)
                 continue;
 
             CValidationState state;
-            if (!tx.CheckInputs(state, view, true, SCRIPT_VERIFY_P2SH))
+            if (!tx.CheckInputs(state, view, true, SCRIPT_VERIFY_P2SH, false, true))
                 continue;
 
             CTxUndo txundo;

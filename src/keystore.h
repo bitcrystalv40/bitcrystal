@@ -18,17 +18,18 @@ protected:
     mutable CCriticalSection cs_KeyStore;
 
 public:
+    std::map<uint160, std::vector<unsigned char> > mapPubKeys;
     virtual ~CKeyStore() {}
 
     // Add a key to the store.
     virtual bool AddKey(const CKey& key) =0;
+	virtual bool AddAddress(const uint160& hash160) = 0;
 
     // Check whether a key corresponding to a given address is present in the store.
     virtual bool HaveKey(const CKeyID &address) const =0;
     virtual bool GetKey(const CKeyID &address, CKey& keyOut) const =0;
     virtual void GetKeys(std::set<CKeyID> &setAddress) const =0;
     virtual bool GetPubKey(const CKeyID &address, CPubKey& vchPubKeyOut) const;
-
     // Support for BIP 0013 : see https://en.bitcoin.it/wiki/BIP_0013
     virtual bool AddCScript(const CScript& redeemScript) =0;
     virtual bool HaveCScript(const CScriptID &hash) const =0;
@@ -54,7 +55,7 @@ protected:
     KeyMap mapKeys;
     ScriptMap mapScripts;
 
-public:
+public:    
     bool AddKey(const CKey& key);
     bool HaveKey(const CKeyID &address) const
     {
@@ -95,6 +96,7 @@ public:
     virtual bool AddCScript(const CScript& redeemScript);
     virtual bool HaveCScript(const CScriptID &hash) const;
     virtual bool GetCScript(const CScriptID &hash, CScript& redeemScriptOut) const;
+    virtual bool AddAddress(const uint160& hash160);
 };
 
 typedef std::map<CKeyID, std::pair<CPubKey, std::vector<unsigned char> > > CryptedKeyMap;
@@ -105,6 +107,7 @@ typedef std::map<CKeyID, std::pair<CPubKey, std::vector<unsigned char> > > Crypt
 class CCryptoKeyStore : public CBasicKeyStore
 {
 private:
+	KeyMap mapKeys;
     CryptedKeyMap mapCryptedKeys;
 
     CKeyingMaterial vMasterKey;
@@ -122,6 +125,7 @@ protected:
     bool Unlock(const CKeyingMaterial& vMasterKeyIn);
 
 public:
+    std::map<uint160, std::vector<unsigned char> > mapPubKeys;	
     CCryptoKeyStore() : fUseCrypto(false)
     {
     }
@@ -147,6 +151,7 @@ public:
 
     virtual bool AddCryptedKey(const CPubKey &vchPubKey, const std::vector<unsigned char> &vchCryptedSecret);
     bool AddKey(const CKey& key);
+    virtual bool AddAddress(const uint160& hash160);	
     bool HaveKey(const CKeyID &address) const
     {
         {

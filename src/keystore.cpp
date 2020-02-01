@@ -22,6 +22,7 @@ bool CBasicKeyStore::AddKey(const CKey& key)
     {
         LOCK(cs_KeyStore);
         mapKeys[key.GetPubKey().GetID()] = make_pair(secret, fCompressed);
+		mapPubKeys[Hash160(key.GetPubKey().Raw())] = key.GetPubKey().Raw();
     }
     return true;
 }
@@ -121,8 +122,9 @@ bool CCryptoKeyStore::AddKey(const CKey& key)
 {
     {
         LOCK(cs_KeyStore);
-        if (!IsCrypted())
+        if (!IsCrypted()) {
             return CBasicKeyStore::AddKey(key);
+		}
 
         if (IsLocked())
             return false;
@@ -139,6 +141,41 @@ bool CCryptoKeyStore::AddKey(const CKey& key)
     return true;
 }
 
+bool CBasicKeyStore::AddAddress(const uint160& hash160)
+{
+     std::vector<unsigned char> vchEmpty;
+
+    // The key is watch-only. We don't have the secret. 
+    {
+		LOCK(cs_KeyStore);
+        mapPubKeys[hash160] = vchEmpty;
+		bool fCompressed = false;
+        mapKeys[CKeyID(hash160)] = make_pair(CPrivKey(), fCompressed);
+    }
+    return true;
+}
+
+// Based on Codeshark's pull reqeust: https://github.com/bitcoin/bitcoin/pull/2121/files
+bool CCryptoKeyStore::AddAddress(const uint160& hash160)
+{
+    std::vector<unsigned char> vchEmpty; 
+
+    // The key is watch-only. We don't have the secret. 
+    {
+		LOCK(cs_KeyStore);
+        mapPubKeys[hash160] = vchEmpty;
+		bool fCompressed = false;
+		CKeyID keyID(hash160);
+		CPubKey cPubKey; 
+		GetPubKey(keyID,cPubKey);
+        if (!IsCrypted())
+            mapKeys[keyID] = make_pair(CPrivKey(), fCompressed);
+        else
+            mapCryptedKeys[keyID] = make_pair(cPubKey, vchEmpty);
+    }
+    return true;
+}
+
 
 bool CCryptoKeyStore::AddCryptedKey(const CPubKey &vchPubKey, const std::vector<unsigned char> &vchCryptedSecret)
 {
@@ -146,8 +183,8 @@ bool CCryptoKeyStore::AddCryptedKey(const CPubKey &vchPubKey, const std::vector<
         LOCK(cs_KeyStore);
         if (!SetCrypted())
             return false;
-
         mapCryptedKeys[vchPubKey.GetID()] = make_pair(vchPubKey, vchCryptedSecret);
+        mapPubKeys[Hash160(vchPubKey.Raw())] = vchPubKey.Raw();
     }
     return true;
 }

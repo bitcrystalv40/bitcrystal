@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 
+#include "hook.h"
 #include "serialize.h"
 #include "compat.h"
 

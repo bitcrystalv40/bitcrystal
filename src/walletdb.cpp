@@ -274,7 +274,7 @@ ReadKeyValue(CWallet* pwallet, CDataStream& ssKey, CDataStream& ssValue,
             int op, nOut;
             std::vector<std::vector<unsigned char> > vvch;
             int nHeight;
-            if (!wtx.GetDepthInMainChain(nHeight))
+            if (!wtx.GetDepthInMainChain())
                 nHeight = pindexBest->nHeight + 1;
 			
             if (DecodeNameTx(wtx, op, nOut, vvch, nHeight) && op == OP_NAME_FIRSTUPDATE && vvch.size() == 3)
@@ -423,7 +423,7 @@ ReadKeyValue(CWallet* pwallet, CDataStream& ssKey, CDataStream& ssValue,
             // auto-broadcasted, when name_new is 12 blocks old)
             ssValue >> wtxInHash >> prep.rand >> prep.vchData >> prep.wtx;
                 
-            prep.wtx.pwallet = pwallet;
+            prep.wtx.BindWallet(pwallet);
 
             // TODO: also would be good to check that name, rand, wtxInHash and value match with prep.wtx
             // Note: wtxInHash IS NOT prep.wtx.GetHash(), it is the hash of previous name_new

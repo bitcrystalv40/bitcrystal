@@ -11,13 +11,13 @@
 #include <boost/signals2/signal.hpp>
 #include <boost/signals2/last_value.hpp>
 
-#define LOCK(cs) CCriticalBlock criticalblock(cs)
-#define LOCK2(cs1,cs2) CCriticalBlock criticalblock1(cs1),criticalblock2(cs2) 
+//#define LOCK(cs) CCriticalBlock criticalblock(cs)
+//#define LOCK2(cs1,cs2) CCriticalBlock criticalblock1(cs1),criticalblock2(cs2) 
 
 class CWallet;
 class uint256;
 
-static const unsigned int LOCKTIME_THRESHOLD = 500000000; // Tue Nov  5 00:53:20 1985 UTC
+//static const unsigned int LOCKTIME_THRESHOLD = 500000000; // Tue Nov  5 00:53:20 1985 UTC
 
 /** General change type (added, updated, removed). */
 enum ChangeType
@@ -106,9 +106,9 @@ public:
 
 extern CClientUIInterface uiInterface;
 
-typedef std::string CTxDestination;
+//typedef std::string CTxDestination;
 
-class CBitcoinAddress
+/*class CBitcoinAddress
 {
 private:
     std::string addr;
@@ -145,7 +145,7 @@ public:
     std::string Get() const { return addr; }
     std::string ToString() const  { return addr; }    
     bool IsScript() const { return false; }
-};
+};*/
 
 
 /**

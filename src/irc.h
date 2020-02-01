@@ -5,7 +5,7 @@
 #define BITCOIN_IRC_H
 
 bool RecvLine(SOCKET hSocket, std::string& strLine);
-void ThreadIRCSeed(void* parg);
+void ThreadIRCSeed();
 
 extern int nGotIRCAddresses;
 extern bool fGotExternalIP;

@@ -49,5 +49,4 @@ public:
     bool ReadFlag(const std::string &name, bool &fValue);
     bool LoadBlockIndexGuts();
 };
-
 #endif // BITCOIN_TXDB_LEVELDB_H

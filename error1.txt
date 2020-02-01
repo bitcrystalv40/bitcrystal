@@ -1,0 +1,538 @@
+Project MESSAGE: Building with QRCode support
+Project MESSAGE: Building with UPNP support
+Project MESSAGE: Building without IPv6 support
+Project MESSAGE: Building with QRCode support
+Project MESSAGE: Building with UPNP support
+Project MESSAGE: Building without IPv6 support
+Project MESSAGE: Building with QRCode support
+Project MESSAGE: Building with UPNP support
+Project MESSAGE: Building without IPv6 support
+In file included from src\netbase.h:12:0,
+                 from src\util.h:79,
+                 from src\bignum.h:12,
+                 from src\main.h:8,
+                 from src\db.h:8,
+                 from src\namecoin.cpp:6:
+src\compat.h:14:0: Warnung: »FD_SETSIZE« redefiniert
+ #define FD_SETSIZE 1024 // max number of fds in fd_set
+ 
+In file included from c:\mingw\include\winsock2.h:62:0,
+                 from c:\mingw\include\_winsock.h:50,
+                 from c:\mingw\include\windows.h:85,
+                 from src\util.h:16,
+                 from src\bignum.h:12,
+                 from src\main.h:8,
+                 from src\db.h:8,
+                 from src\namecoin.cpp:6:
+c:\mingw\include\winsock.h:106:0: Anmerkung: dies ist die Stelle der vorherigen Definition
+ #define FD_SETSIZE      64
+ 
+In file included from src\bignum.h:12:0,
+                 from src\main.h:8,
+                 from src\db.h:8,
+                 from src\namecoin.cpp:6:
+src\util.h:309:22: Warnung: ungültiges Suffix an Literal; C++11 erfordert Leerzeichen zwischen Literal und Zeichenketten-Makro [-Wliteral-suffix]
+     return strprintf("%"PRI64d, n);
+                      ^
+In file included from src\main.h:10:0,
+                 from src\db.h:8,
+                 from src\namecoin.cpp:6:
+src\net.h:370:20: Warnung: ungültiges Suffix an Literal; C++11 erfordert Leerzeichen zwischen Literal und Zeichenketten-Makro [-Wliteral-suffix]
+             printf("askfor %s   %"PRI64d" (%s)\n", inv.ToString().c_str(), nRequestTime, DateTimeStrFormat("%H:%M:%S", nRequestTime/1000000).c_str());
+                    ^
+In file included from src\db.h:8:0,
+                 from src\namecoin.cpp:6:
+src\main.h:463:26: Warnung: ungültiges Suffix an Literal; C++11 erfordert Leerzeichen zwischen Literal und Zeichenketten-Makro [-Wliteral-suffix]
+         return strprintf("CTxOut(nValue=%"PRI64d".%05"PRI64d", scriptPubKey=%s)", nValue / COIN, nValue % COIN, scriptPubKey.ToString().substr(0,30).c_str());
+                          ^
+src\main.h:463:49: Warnung: ungültiges Suffix an Literal; C++11 erfordert Leerzeichen zwischen Literal und Zeichenketten-Makro [-Wliteral-suffix]
+         return strprintf("CTxOut(nValue=%"PRI64d".%05"PRI64d", scriptPubKey=%s)", nValue / COIN, nValue % COIN, scriptPubKey.ToString().substr(0,30).c_str());
+                                                 ^
+src\main.h:656:26: Warnung: ungültiges Suffix an Literal; C++11 erfordert Leerzeichen zwischen Literal und Zeichenketten-Makro [-Wliteral-suffix]
+         str += strprintf("CTransaction(hash=%s, ver=%d, vin.size=%"PRIszu", vout.size=%"PRIszu", nLockTime=%u, strTxComment=%s)\n",
+                          ^
+src\main.h:656:74: Warnung: ungültiges Suffix an Literal; C++11 erfordert Leerzeichen zwischen Literal und Zeichenketten-Makro [-Wliteral-suffix]
+         str += strprintf("CTransaction(hash=%s, ver=%d, vin.size=%"PRIszu", vout.size=%"PRIszu", nLockTime=%u, strTxComment=%s)\n",
+                                                                          ^
+src\main.h:1502:16: Warnung: ungültiges Suffix an Literal; C++11 erfordert Leerzeichen zwischen Literal und Zeichenketten-Makro [-Wliteral-suffix]
+         printf("CBlock(hash=%s, ver=%d, hashPrevBlock=%s, hashMerkleRoot=%s, nTime=%u, nBits=%08x, nNonce=%u, vtx=%"PRIszu")\n",
+                ^
+In file included from c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:32:0,
+                 from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\bignum.h:12,
+                 from src\main.h:8,
+                 from src\db.h:8,
+                 from src\namecoin.cpp:6:
+c:\deps\boost_1_55_0/boost/smart_ptr/detail/shared_count.hpp:323:33: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
+     explicit shared_count( std::auto_ptr<Y> & r ): pi_( new sp_counted_impl_p<Y>( r.get() ) )
+                                 ^~~~~~~~
+In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
+                 from c:\deps\boost_1_55_0/boost/config/no_tr1/memory.hpp:21,
+                 from c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:27,
+                 from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\bignum.h:12,
+                 from src\main.h:8,
+                 from src\db.h:8,
+                 from src\namecoin.cpp:6:
+c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
+   template<typename> class auto_ptr;
+                            ^~~~~~~~
+In file included from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17:0,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\bignum.h:12,
+                 from src\main.h:8,
+                 from src\db.h:8,
+                 from src\namecoin.cpp:6:
+c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:247:65: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
+ template< class T, class R > struct sp_enable_if_auto_ptr< std::auto_ptr< T >, R >
+                                                                 ^~~~~~~~
+In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
+                 from c:\deps\boost_1_55_0/boost/config/no_tr1/memory.hpp:21,
+                 from c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:27,
+                 from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\bignum.h:12,
+                 from src\main.h:8,
+                 from src\db.h:8,
+                 from src\namecoin.cpp:6:
+c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
+   template<typename> class auto_ptr;
+                            ^~~~~~~~
+In file included from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17:0,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\bignum.h:12,
+                 from src\main.h:8,
+                 from src\db.h:8,
+                 from src\namecoin.cpp:6:
+c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:446:31: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
+     explicit shared_ptr( std::auto_ptr<Y> & r ): px(r.get()), pn()
+                               ^~~~~~~~
+In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
+                 from c:\deps\boost_1_55_0/boost/config/no_tr1/memory.hpp:21,
+                 from c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:27,
+                 from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\bignum.h:12,
+                 from src\main.h:8,
+                 from src\db.h:8,
+                 from src\namecoin.cpp:6:
+c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
+   template<typename> class auto_ptr;
+                            ^~~~~~~~
+In file included from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17:0,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\bignum.h:12,
+                 from src\main.h:8,
+                 from src\db.h:8,
+                 from src\namecoin.cpp:6:
+c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:459:22: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
+     shared_ptr( std::auto_ptr<Y> && r ): px(r.get()), pn()
+                      ^~~~~~~~
+In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
+                 from c:\deps\boost_1_55_0/boost/config/no_tr1/memory.hpp:21,
+                 from c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:27,
+                 from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\bignum.h:12,
+                 from src\main.h:8,
+                 from src\db.h:8,
+                 from src\namecoin.cpp:6:
+c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
+   template<typename> class auto_ptr;
+                            ^~~~~~~~
+In file included from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17:0,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\bignum.h:12,
+                 from src\main.h:8,
+                 from src\db.h:8,
+                 from src\namecoin.cpp:6:
+c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:525:34: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
+     shared_ptr & operator=( std::auto_ptr<Y> & r )
+                                  ^~~~~~~~
+In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
+                 from c:\deps\boost_1_55_0/boost/config/no_tr1/memory.hpp:21,
+                 from c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:27,
+                 from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\bignum.h:12,
+                 from src\main.h:8,
+                 from src\db.h:8,
+                 from src\namecoin.cpp:6:
+c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
+   template<typename> class auto_ptr;
+                            ^~~~~~~~
+In file included from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17:0,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\bignum.h:12,
+                 from src\main.h:8,
+                 from src\db.h:8,
+                 from src\namecoin.cpp:6:
+c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:534:34: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
+     shared_ptr & operator=( std::auto_ptr<Y> && r )
+                                  ^~~~~~~~
+In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
+                 from c:\deps\boost_1_55_0/boost/config/no_tr1/memory.hpp:21,
+                 from c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:27,
+                 from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\bignum.h:12,
+                 from src\main.h:8,
+                 from src\db.h:8,
+                 from src\namecoin.cpp:6:
+c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
+   template<typename> class auto_ptr;
+                            ^~~~~~~~
+In file included from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17:0,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\bignum.h:12,
+                 from src\main.h:8,
+                 from src\db.h:8,
+                 from src\namecoin.cpp:6:
+c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp: In Elementfunktion »boost::shared_ptr<T>& boost::shared_ptr<T>::operator=(std::auto_ptr<_Up>&&)«:
+c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:536:38: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
+         this_type( static_cast< std::auto_ptr<Y> && >( r ) ).swap( *this );
+                                      ^~~~~~~~
+In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
+                 from c:\deps\boost_1_55_0/boost/config/no_tr1/memory.hpp:21,
+                 from c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:27,
+                 from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\bignum.h:12,
+                 from src\main.h:8,
+                 from src\db.h:8,
+                 from src\namecoin.cpp:6:
+c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
+   template<typename> class auto_ptr;
+                            ^~~~~~~~
+In file included from c:\deps\boost_1_55_0/boost/bind/mem_fn.hpp:25:0,
+                 from c:\deps\boost_1_55_0/boost/mem_fn.hpp:22,
+                 from c:\deps\boost_1_55_0/boost/bind/bind.hpp:26,
+                 from c:\deps\boost_1_55_0/boost/bind.hpp:22,
+                 from c:\deps\boost_1_55_0/boost/thread/detail/thread.hpp:29,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:22,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\bignum.h:12,
+                 from src\main.h:8,
+                 from src\db.h:8,
+                 from src\namecoin.cpp:6:
+c:\deps\boost_1_55_0/boost/get_pointer.hpp: Im globalen Gültigkeitsbereich:
+c:\deps\boost_1_55_0/boost/get_pointer.hpp:27:40: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
+ template<class T> T * get_pointer(std::auto_ptr<T> const& p)
+                                        ^~~~~~~~
+In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
+                 from c:\deps\boost_1_55_0/boost/config/no_tr1/memory.hpp:21,
+                 from c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:27,
+                 from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\bignum.h:12,
+                 from src\main.h:8,
+                 from src\db.h:8,
+                 from src\namecoin.cpp:6:
+c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
+   template<typename> class auto_ptr;
+                            ^~~~~~~~
+In file included from c:\deps\boost_1_55_0/boost/thread/thread.hpp:13:0,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\bignum.h:12,
+                 from src\main.h:8,
+                 from src\db.h:8,
+                 from src\namecoin.cpp:6:
+c:\deps\boost_1_55_0/boost/thread/detail/thread_group.hpp: In Elementfunktion »boost::thread* boost::thread_group::create_thread(F)«:
+c:\deps\boost_1_55_0/boost/thread/detail/thread_group.hpp:78:18: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
+             std::auto_ptr<thread> new_thread(new thread(threadfunc));
+                  ^~~~~~~~
+In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
+                 from c:\deps\boost_1_55_0/boost/config/no_tr1/memory.hpp:21,
+                 from c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:27,
+                 from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\bignum.h:12,
+                 from src\main.h:8,
+                 from src\db.h:8,
+                 from src\namecoin.cpp:6:
+c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
+   template<typename> class auto_ptr;
+                            ^~~~~~~~
+In file included from c:\deps\boost_1_55_0/boost/scoped_ptr.hpp:14:0,
+                 from c:\deps\boost_1_55_0/boost/thread/future.hpp:30,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:24,
+                 from src\util.h:73,
+                 from src\bignum.h:12,
+                 from src\main.h:8,
+                 from src\db.h:8,
+                 from src\namecoin.cpp:6:
+c:\deps\boost_1_55_0/boost/smart_ptr/scoped_ptr.hpp: Im globalen Gültigkeitsbereich:
+c:\deps\boost_1_55_0/boost/smart_ptr/scoped_ptr.hpp:68:31: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
+     explicit scoped_ptr( std::auto_ptr<T> p ) BOOST_NOEXCEPT : px( p.release() )
+                               ^~~~~~~~
+In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
+                 from c:\deps\boost_1_55_0/boost/config/no_tr1/memory.hpp:21,
+                 from c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:27,
+                 from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\bignum.h:12,
+                 from src\main.h:8,
+                 from src\db.h:8,
+                 from src\namecoin.cpp:6:
+c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
+   template<typename> class auto_ptr;
+                            ^~~~~~~~
+In file included from c:\deps\boost_1_55_0/boost/spirit/home/classic/core/non_terminal/grammar.hpp:21:0,
+                 from c:\deps\boost_1_55_0/boost/spirit/home/classic/core.hpp:42,
+                 from c:\deps\boost_1_55_0/boost/spirit/include/classic_core.hpp:11,
+                 from src\json/json_spirit_reader_template.h:19,
+                 from src\bitcoinrpc.h:16,
+                 from src\namecoin.cpp:12:
+c:\deps\boost_1_55_0/boost/spirit/home/classic/core/non_terminal/impl/grammar.ipp: In Elementfunktion »boost::spirit::classic::impl::grammar_helper<GrammarT, DerivedT, ScannerT>::definition_t& boost::spirit::classic::impl::grammar_helper<GrammarT, DerivedT, ScannerT>::define(const grammar_t*)«:
+c:\deps\boost_1_55_0/boost/spirit/home/classic/core/non_terminal/impl/grammar.ipp:177:18: Warnung: »template<class> class std::auto_ptr« ist veraltet [-Wdeprecated-declarations]
+             std::auto_ptr<definition_t>
+                  ^~~~~~~~
+In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\memory:81:0,
+                 from c:\deps\boost_1_55_0/boost/config/no_tr1/memory.hpp:21,
+                 from c:\deps\boost_1_55_0/boost/smart_ptr/shared_ptr.hpp:27,
+                 from c:\deps\boost_1_55_0/boost/shared_ptr.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/date_time/time_clock.hpp:17,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_time.hpp:9,
+                 from c:\deps\boost_1_55_0/boost/thread/win32/thread_data.hpp:10,
+                 from c:\deps\boost_1_55_0/boost/thread/thread_only.hpp:15,
+                 from c:\deps\boost_1_55_0/boost/thread/thread.hpp:12,
+                 from c:\deps\boost_1_55_0/boost/thread.hpp:13,
+                 from src\util.h:73,
+                 from src\bignum.h:12,
+                 from src\main.h:8,
+                 from src\db.h:8,
+                 from src\namecoin.cpp:6:
+c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\unique_ptr.h:49:28: Anmerkung: hier deklariert
+   template<typename> class auto_ptr;
+                            ^~~~~~~~
+src\namecoin.cpp: In Funktion »bool NameBugWorkaround(const CTransaction&, CDiskTxPos*)«:
+src\namecoin.cpp:1433:24: Fehler: falsche Benutzung des unvollständigen Typs »class CBlockTreeDB«
+         if (!pblocktree->ReadTxIndex(prevout.hash, txindex))
+                        ^~
+In file included from src\db.h:8:0,
+                 from src\namecoin.cpp:6:
+src\main.h:110:7: Anmerkung: forward declaration of »class CBlockTreeDB«
+ class CBlockTreeDB;
+       ^~~~~~~~~~~~
+src\namecoin.cpp:1452:39: Fehler: »class CDiskTxPos« has no member named »pos«; did you mean »nPos«?
+                 *pPrevTxPos = txindex.pos;
+                                       ^~~
+src\namecoin.cpp: In Elementfunktion »bool CNameDB::ReconstructNameIndex()«:
+src\namecoin.cpp:1501:14: Fehler: Aggregat »CTxIndex txindex« hat unvollständigen Typ und kann nicht definiert werden
+     CTxIndex txindex;
+              ^~~~~~~
+src\namecoin.cpp:1528:31: Fehler: falsche Benutzung des unvollständigen Typs »class CBlockTreeDB«
+                 if(!pblocktree->ReadDiskTx(tx.GetHash(), tx, txindex))
+                               ^~
+In file included from src\db.h:8:0,
+                 from src\namecoin.cpp:6:
+src\main.h:110:7: Anmerkung: forward declaration of »class CBlockTreeDB«
+ class CBlockTreeDB;
+       ^~~~~~~~~~~~
+src\namecoin.cpp:1534:48: Fehler: »txdb« wurde in diesem Gültigkeitsbereich nicht definiert
+                     if (!NameBugWorkaround(tx, txdb, &prevTxPos))
+                                                ^~~~
+src\namecoin.cpp:1548:24: Fehler: expected identifier before »!« token
+                     && !CheckNameTxPos(vtxPos, prevTxPos))
+                        ^
+src\namecoin.cpp:1548:24: Fehler: expected »)« before »!« token
+src\namecoin.cpp: In Funktion »CHooks* InitHook()«:
+src\namecoin.cpp:1575:5: Fehler: »mapCallTable« wurde in diesem Gültigkeitsbereich nicht definiert
+     mapCallTable.insert(make_pair("name_new", &name_new));
+     ^~~~~~~~~~~~
+src\namecoin.cpp: In Funktion »int CheckTransactionAtRelativeDepth(CBlockIndex*, CTxIndex&, int)«:
+src\namecoin.cpp:1884:21: Fehler: »class CBlockIndex« has no member named »nBlockPos«; did you mean »GetBlockPos«?
+         if (pindex->nBlockPos == txindex.pos.nBlockPos && pindex->nFile == txindex.pos.nFile)
+                     ^~~~~~~~~
+src\namecoin.cpp:1884:41: Fehler: falsche Benutzung des unvollständigen Typs »class CTxIndex«
+         if (pindex->nBlockPos == txindex.pos.nBlockPos && pindex->nFile == txindex.pos.nFile)
+                                         ^
+In file included from src\namecoin.cpp:6:0:
+src\db.h:18:7: Anmerkung: forward declaration of »class CTxIndex«
+ class CTxIndex;
+       ^~~~~~~~
+src\namecoin.cpp:1884:83: Fehler: falsche Benutzung des unvollständigen Typs »class CTxIndex«
+         if (pindex->nBlockPos == txindex.pos.nBlockPos && pindex->nFile == txindex.pos.nFile)
+                                                                                   ^
+In file included from src\namecoin.cpp:6:0:
+src\db.h:18:7: Anmerkung: forward declaration of »class CTxIndex«
+ class CTxIndex;
+       ^~~~~~~~
+src\namecoin.cpp: In Elementfunktion »virtual bool CNamecoinHooks::ConnectInputs(const CTransaction&, CBlockIndex*)«:
+src\namecoin.cpp:1950:31: Fehler: »inputs« wurde in diesem Gültigkeitsbereich nicht definiert
+         const CCoins &coins = inputs.GetCoins(prevout.hash);
+                               ^~~~~~
+src\namecoin.cpp:2068:53: Fehler: ungültige Initialisierung einer Referenz des Typs »CNameDB&« von Ausdruck des Typs »__gnu_cxx::__alloc_traits<std::allocator<std::vector<unsigned char> > >::value_type {aka std::vector<unsigned char>}«
+             nPrevHeight = GetNameHeight (vvchArgs[0]);
+                                                     ^
+src\namecoin.cpp:119:1: Anmerkung: in passing argument 1 of »int GetNameHeight(CNameDB&, std::vector<unsigned char>)«
+ GetNameHeight (CNameDB & ndb, vector<unsigned char> vchName)
+ ^~~~~~~~~~~~~
+src\namecoin.cpp:2071:67: Fehler: »vTxindex« wurde in diesem Gültigkeitsbereich nicht definiert
+             nDepth = CheckTransactionAtRelativeDepth(pindexBlock, vTxindex[nInput], MIN_FIRSTUPDATE_DEPTH);
+                                                                   ^~~~~~~~
+In file included from src\net.h:10:0,
+                 from src\main.h:10,
+                 from src\db.h:8,
+                 from src\namecoin.cpp:6:
+src\namecoin.cpp:2085:69: Fehler: »mapTestPool« wurde in diesem Gültigkeitsbereich nicht definiert
+                 BOOST_FOREACH(const PAIRTYPE(uint256, CTxIndex)& s, mapTestPool)
+                                                                     ^
+c:\deps\boost_1_55_0/boost/foreach.hpp:940:6: Anmerkung: in Definition des Makros »BOOST_FOREACH_EVALUATE«
+     (COL)
+      ^~~
+c:\deps\boost_1_55_0/boost/foreach.hpp:1101:77: Anmerkung: bei Substitution des Makros »BOOST_FOREACH_CONTAIN«
+     if (boost::foreach_detail_::auto_any_t BOOST_FOREACH_ID(_foreach_col) = BOOST_FOREACH_CONTAIN(COL)) {} else   \
+                                                                             ^~~~~~~~~~~~~~~~~~~~~
+src\namecoin.cpp:2085:17: Anmerkung: bei Substitution des Makros »BOOST_FOREACH«
+                 BOOST_FOREACH(const PAIRTYPE(uint256, CTxIndex)& s, mapTestPool)
+                 ^
+In file included from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_algobase.h:64:0,
+                 from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\char_traits.h:39,
+                 from c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\string:40,
+                 from src\hook.h:8,
+                 from src\namecoin.cpp:5:
+c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_pair.h: In Instanziierung von »struct std::pair<uint256, CTxIndex>«:
+src\namecoin.cpp:2087:43:   required from here
+c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\stl_pair.h:196:11: Fehler: »std::pair<_T1, _T2>::second« has incomplete type
+       _T2 second;                /// @c second is a copy of the second object
+           ^~~~~~
+In file included from src\namecoin.cpp:6:0:
+src\db.h:18:7: Anmerkung: forward declaration of »class CTxIndex«
+ class CTxIndex;
+       ^~~~~~~~
+src\namecoin.cpp:2131:41: Fehler: »vTxindex« wurde in diesem Gültigkeitsbereich nicht definiert
+             if (!CheckNameTxPos(vtxPos, vTxindex[nInput].pos))
+                                         ^~~~~~~~
+src\namecoin.cpp:2132:172: Fehler: »vTxPrev« wurde in diesem Gültigkeitsbereich nicht definiert
+                 return error("ConnectInputsHook() : Name bug workaround: tx %s rejected, since previous tx (%s) is not in the name DB\n", tx.GetHash().ToString().c_str(), vTxPrev[nInput].GetHash().ToString().c_str());
+                                                                                                                                                                            ^~~~~~~
+src\namecoin.cpp:2145:69: Fehler: »vTxindex« wurde in diesem Gültigkeitsbereich nicht definiert
+                 if (op == OP_NAME_UPDATE && !CheckNameTxPos(vtxPos, vTxindex[nInput].pos))
+                                                                     ^~~~~~~~
+src\namecoin.cpp:2147:170: Fehler: »vTxPrev« wurde in diesem Gültigkeitsbereich nicht definiert
+                     printf("ConnectInputsHook() : Name bug workaround: tx %s rejected, since previous tx (%s) is not in the name DB\n", tx.GetHash().ToString().c_str(), vTxPrev[nInput].GetHash().ToString().c_str());
+                                                                                                                                                                          ^~~~~~~
+src\namecoin.cpp:2157:37: Fehler: »txPos« wurde in diesem Gültigkeitsbereich nicht definiert
+                     GetValueOfTxPos(txPos, vchValue, hash, nHeight);
+                                     ^~~~~
+src\namecoin.cpp: In Elementfunktion »virtual bool CNamecoinHooks::DisconnectInputs(const CTransaction&, CBlockIndex*)«:
+src\namecoin.cpp:2184:3: Fehler: »CTxDB« wurde in diesem Gültigkeitsbereich nicht definiert
+   CTxDB txDb;
+   ^~~~~
+src\namecoin.cpp:2206:22: Fehler: Aggregat »CTxIndex txindex« hat unvollständigen Typ und kann nicht definiert werden
+             CTxIndex txindex;
+                      ^~~~~~~
+src\namecoin.cpp:2207:18: Fehler: »txDb« wurde in diesem Gültigkeitsbereich nicht definiert
+             if (!txDb.ReadTxIndex (tx.GetHash (), txindex))
+                  ^~~~
+mingw32-make[1]: *** [build_win32_objects/namecoin.o] Error 1
+mingw32-make[1]: *** Waiting for unfinished jobs....
+mingw32-make: *** [release] Error 2
