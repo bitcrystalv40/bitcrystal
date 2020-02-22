@@ -36,7 +36,7 @@ namespace boost {
 
 #include <boost/program_options/detail/config_file.hpp>
 #include <boost/program_options/parsers.hpp>
-#include <boost/filesystem.hpp>
+#include "boost_filesystem.h"
 #include <boost/filesystem/fstream.hpp>
 #include <boost/foreach.hpp>
 #include <boost/thread.hpp>

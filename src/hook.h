@@ -15,7 +15,7 @@ class CTxOut;
 class CHooks
 {
 public:
-    virtual bool CheckTransaction(const CTransaction& tx) = 0;
+	virtual bool CheckTransaction(const CTransaction& tx) = 0;
     virtual bool ConnectInputs(const CTransaction& tx, CBlockIndex* pindexBlock, bool fBlock, bool fMiner) = 0;
     virtual bool DisconnectInputs (const CTransaction& tx, CBlockIndex* pindexBlock) = 0;
     virtual bool ExtractAddress(const CScript& script, std::string& address) = 0;
@@ -30,5 +30,4 @@ public:
 };
 
 extern CHooks* InitHook();
-
 #endif

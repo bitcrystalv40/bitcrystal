@@ -10,7 +10,7 @@
 #include <leveldb/filter_policy.h>
 #include <memenv/memenv.h>
 
-#include <boost/filesystem.hpp>
+#include "boost_filesystem.h"
 
 void HandleError(const leveldb::Status &status) throw(leveldb_error) {
     if (status.ok())

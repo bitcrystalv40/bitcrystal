@@ -61,7 +61,7 @@ bool CWallet::AddKey(const CKey& key)
 // Based on Codeshark's pull reqeust: https://github.com/bitcoin/bitcoin/pull/2121/files
 bool CWallet::AddAddress(const uint160& hash160)
 {
-    if (!CKeyStore::AddAddress(hash160))
+    if (!CCryptoKeyStore::AddAddress(hash160))
         return false;
     if (!fFileBacked)
         return true;

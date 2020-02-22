@@ -90,6 +90,6 @@ del /q /s %~dp0build_objects\*.o
 	mkdir %~dp0build_win32_objects
 )
 
-qmake.exe "USE_QRCODE=1" "USE_UPNP=1" "USE_IPV6=-" bitcrystal-qt.pro -spec win32-g++ -r CONFIG+=release 
+qmake.exe "USE_QRCODE=1" "USE_UPNP=1" "USE_IPV6=-" bitcrystal-qt.pro -spec win32-g++ -r CONFIG+=debug 
 mingw32-make -j4
 pause

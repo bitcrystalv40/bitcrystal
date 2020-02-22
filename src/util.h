@@ -16,7 +16,6 @@ extern bool fUseProxy;
 #include <windows.h>
 #include <winsock2.h>
 #include <mswsock.h>
-
 #ifndef UINT64_MAX
 #define UINT64_MAX          _UI64_MAX
 #define INT64_MAX           _I64_MAX
@@ -71,7 +70,7 @@ typedef int pid_t; /* define for Windows compatibility */
 #include <string>
 
 #include <boost/thread.hpp>
-#include <boost/filesystem.hpp>
+#include "boost_filesystem.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/date_time/gregorian/gregorian_types.hpp>
 #include <boost/date_time/posix_time/posix_time_types.hpp>

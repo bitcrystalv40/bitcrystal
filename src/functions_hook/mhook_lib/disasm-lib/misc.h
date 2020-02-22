@@ -4,7 +4,6 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
 #include <windows.h>
 #include <stdio.h>
 #include <stdarg.h>

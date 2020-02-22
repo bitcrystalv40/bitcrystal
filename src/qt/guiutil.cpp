@@ -21,7 +21,7 @@
 #include <QDesktopServices>
 #include <QThread>
 
-#include <boost/filesystem.hpp>
+#include "boost_filesystem.h"
 #include <boost/filesystem/fstream.hpp>
 
 #ifdef WIN32

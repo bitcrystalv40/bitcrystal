@@ -14,7 +14,7 @@
 #include <boost/asio.hpp>
 #include <boost/asio/ip/v6_only.hpp>
 #include <boost/bind.hpp>
-#include <boost/filesystem.hpp>
+#include "boost_filesystem.h"
 #include <boost/foreach.hpp>
 #include <boost/iostreams/concepts.hpp>
 #include <boost/iostreams/stream.hpp>
@@ -310,7 +310,9 @@ static const CRPCCommand vRPCCommands[] =
 	{ "decodetrade",        &decodetrade,        false,     false },
 	{ "encodetradewith",        &encodetradewith,        false,     false },
 	{ "decodetradewith",        &decodetradewith,        false,     false },
+	#ifndef OS_WIN
 	{ "testertest",        &testertest,        false,     false },
+	#endif
 };
 
 CRPCTable::CRPCTable()

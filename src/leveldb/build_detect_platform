@@ -60,6 +60,7 @@ PLATFORM_SHARED_LDFLAGS="-shared -Wl,-soname -Wl,"
 PLATFORM_SHARED_CFLAGS="-fPIC"
 PLATFORM_SHARED_VERSIONED=true
 
+
 MEMCMP_FLAG=
 if [ "$CXX" = "g++" ]; then
     # Use libc's memcmp instead of GCC's memcmp.  This results in ~40%
@@ -67,10 +68,12 @@ if [ "$CXX" = "g++" ]; then
     MEMCMP_FLAG="-fno-builtin-memcmp"
 fi
 
+MY_FLAGS="-DGUI"
+
 case "$TARGET_OS" in
     Darwin)
         PLATFORM=OS_MACOSX
-        COMMON_FLAGS="$MEMCMP_FLAG -DOS_MACOSX"
+        COMMON_FLAGS="$MEMCMP_FLAG $MY_FLAGS -DOS_MACOSX"
         PLATFORM_SHARED_EXT=dylib
         [ -z "$INSTALL_PATH" ] && INSTALL_PATH=`pwd`
         PLATFORM_SHARED_LDFLAGS="-dynamiclib -install_name $INSTALL_PATH/"
@@ -78,50 +81,50 @@ case "$TARGET_OS" in
         ;;
     Linux)
         PLATFORM=OS_LINUX
-        COMMON_FLAGS="$MEMCMP_FLAG -pthread -DOS_LINUX"
+        COMMON_FLAGS="$MEMCMP_FLAG $MY_FLAGS -pthread -DOS_LINUX"
         PLATFORM_LDFLAGS="-pthread"
         PORT_FILE=port/port_posix.cc
         ;;
     SunOS)
         PLATFORM=OS_SOLARIS
-        COMMON_FLAGS="$MEMCMP_FLAG -D_REENTRANT -DOS_SOLARIS"
+        COMMON_FLAGS="$MEMCMP_FLAG $MY_FLAGS -D_REENTRANT -DOS_SOLARIS"
         PLATFORM_LIBS="-lpthread -lrt"
         PORT_FILE=port/port_posix.cc
         ;;
     FreeBSD)
         PLATFORM=OS_FREEBSD
-        COMMON_FLAGS="$MEMCMP_FLAG -D_REENTRANT -DOS_FREEBSD"
+        COMMON_FLAGS="$MEMCMP_FLAG $MY_FLAGS -D_REENTRANT -DOS_FREEBSD"
         PLATFORM_LIBS="-lpthread"
         PORT_FILE=port/port_posix.cc
         ;;
     NetBSD)
         PLATFORM=OS_NETBSD
-        COMMON_FLAGS="$MEMCMP_FLAG -D_REENTRANT -DOS_NETBSD"
+        COMMON_FLAGS="$MEMCMP_FLAG $MY_FLAGS -D_REENTRANT -DOS_NETBSD"
         PLATFORM_LIBS="-lpthread -lgcc_s"
         PORT_FILE=port/port_posix.cc
         ;;
     OpenBSD)
         PLATFORM=OS_OPENBSD
-        COMMON_FLAGS="$MEMCMP_FLAG -D_REENTRANT -DOS_OPENBSD"
+        COMMON_FLAGS="$MEMCMP_FLAG $MY_FLAGS -D_REENTRANT -DOS_OPENBSD"
         PLATFORM_LDFLAGS="-pthread"
         PORT_FILE=port/port_posix.cc
         ;;
     DragonFly)
         PLATFORM=OS_DRAGONFLYBSD
-        COMMON_FLAGS="$MEMCMP_FLAG -D_REENTRANT -DOS_DRAGONFLYBSD"
+        COMMON_FLAGS="$MEMCMP_FLAG $MY_FLAGS -D_REENTRANT -DOS_DRAGONFLYBSD"
         PLATFORM_LIBS="-lpthread"
         PORT_FILE=port/port_posix.cc
         ;;
     OS_ANDROID_CROSSCOMPILE)
         PLATFORM=OS_ANDROID
-        COMMON_FLAGS="$MEMCMP_FLAG -D_REENTRANT -DOS_ANDROID -DLEVELDB_PLATFORM_POSIX"
+        COMMON_FLAGS="$MEMCMP_FLAG -D_REENTRANT $MY_FLAGS -DOS_ANDROID -DLEVELDB_PLATFORM_POSIX"
         PLATFORM_LDFLAGS=""  # All pthread features are in the Android C library
         PORT_FILE=port/port_posix.cc
         CROSS_COMPILE=true
         ;;
     HP-UX)
         PLATFORM=OS_HPUX
-        COMMON_FLAGS="$MEMCMP_FLAG -D_REENTRANT -DOS_HPUX"
+        COMMON_FLAGS="$MEMCMP_FLAG $MY_FLAGS -D_REENTRANT -DOS_HPUX"
         PLATFORM_LDFLAGS="-pthread"
         PORT_FILE=port/port_posix.cc
         # man ld: +h internal_name
@@ -129,9 +132,9 @@ case "$TARGET_OS" in
         ;;
     OS_WINDOWS_CROSSCOMPILE | NATIVE_WINDOWS)
         PLATFORM=OS_WINDOWS
-        COMMON_FLAGS="-fno-builtin-memcmp -D_REENTRANT -DOS_WINDOWS -DLEVELDB_PLATFORM_WINDOWS -DWINVER=0x0500 -D__USE_MINGW_ANSI_STDIO=1"
+        COMMON_FLAGS="-fno-builtin-memcmp -D_REENTRANT -DOS_WINDOWS $MY_FLAGS -DLEVELDB_PLATFORM_WINDOWS -DWINVER=0x0500 -D__USE_MINGW_ANSI_STDIO=1"
         PLATFORM_SOURCES="util/env_win.cc"
-        PLATFORM_LIBS="-lshlwapi"
+        PLATFORM_LIBS="-lshlwapi -lboost_system-mgw63-mt-s-1_55 -lboost_filesystem-mgw63-mt-s-1_55 -lboost_thread-mgw63-mt-s-1_55 -lboost_chrono-mgw63-mt-s-1_55"
         PORT_FILE=port/port_win.cc
         CROSS_COMPILE=true
         ;;

@@ -16,7 +16,7 @@
 #include "util.h"
 #include "ui_interface.h"
 
-#include <boost/filesystem.hpp>
+#include "boost_filesystem.h"
 #include <boost/filesystem/fstream.hpp>
 #include <boost/filesystem/convenience.hpp>
 #include <boost/interprocess/sync/file_lock.hpp>
@@ -33,6 +33,7 @@ using namespace boost;
 extern bool fUseProxy;
 extern CService myAddrProxy;
 
+class CHooks * hooks;
 CWallet* pwalletMain;
 CClientUIInterface uiInterface;
 
@@ -255,7 +256,6 @@ bool AppInit(int argc, char* argv[])
 
       CNameDB dbName("cr+");
     }
-
         detectShutdownThread = new boost::thread(boost::bind(&DetectShutdownThread, &threadGroup));
         fRet = AppInit2(threadGroup);
     }

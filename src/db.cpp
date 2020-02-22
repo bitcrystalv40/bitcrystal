@@ -7,7 +7,7 @@
 #include "util.h"
 #include "main.h"
 #include <boost/version.hpp>
-#include <boost/filesystem.hpp>
+#include "boost_filesystem.h"
 #include <boost/filesystem/fstream.hpp>
 
 #ifndef WIN32

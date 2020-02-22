@@ -5,6 +5,7 @@
 #ifndef BITCOIN_INIT_H
 #define BITCOIN_INIT_H
 
+#include "hook.h"
 #include "wallet.h"
 
 extern CWallet* pwalletMain;

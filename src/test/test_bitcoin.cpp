@@ -1,6 +1,6 @@
 #define BOOST_TEST_MODULE Bitcoin Test Suite
 #include <boost/test/unit_test.hpp>
-#include <boost/filesystem.hpp>
+#include "boost_filesystem.h"
 
 #include "db.h"
 #include "txdb.h"

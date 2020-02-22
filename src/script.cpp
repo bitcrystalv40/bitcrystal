@@ -224,6 +224,12 @@ const char* GetOpName(opcodetype opcode)
     case OP_PUBKEY                 : return "OP_PUBKEY";
 
     case OP_INVALIDOPCODE          : return "OP_INVALIDOPCODE";
+	
+	//namecoin
+	case OP_NAME_NEW               : return "OP_NAME_NEW";
+    case OP_NAME_FIRSTUPDATE       : return "OP_NAME_FIRSTUPDATE";
+    case OP_NAME_UPDATE            : return "OP_NAME_UPDATE";
+    case OP_NAME_NOP               : return "OP_NAME_NOP";
     default:
         return "OP_UNKNOWN";
     }
@@ -1136,11 +1142,9 @@ bool Solver(const CScript& scriptPubKey, txnouttype& typeRet, vector<vector<unsi
         mTemplates.insert(make_pair(TX_PUBKEY, CScript() << OP_PUBKEY << OP_CHECKSIG));
 
         // BitCrystal address tx, sender provides hash of pubkey, receiver provides signature and pubkey
-        mTemplates.insert(make_pair(TX_PUBKEYHASH, CScript() << OP_DUP << OP_HASH160 << OP_PUBKEYHASH << OP_EQUALVERIFY << OP_CHECKSIG));
-
-        // Sender provides N pubkeys, receivers provides M signatures
-        mTemplates.insert(make_pair(TX_MULTISIG, CScript() << OP_SMALLINTEGER << OP_PUBKEYS << OP_SMALLINTEGER << OP_CHECKMULTISIG));
+        mTemplates.insert(make_pair(TX_PUBKEYHASH, CScript() << OP_DUP << OP_HASH160 << OP_PUBKEYHASH << OP_EQUALVERIFY << OP_CHECKSIG));		
     }
+	
 
     // Shortcut for pay-to-script-hash, which are more constrained than the other types:
     // it is always OP_HASH160 20 [20 byte hash] OP_EQUAL

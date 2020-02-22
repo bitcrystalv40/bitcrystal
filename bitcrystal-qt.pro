@@ -4,7 +4,7 @@ macx:TARGET = "BitCrystal-Qt"
 VERSION = 2.0.0
 INCLUDEPATH += src src/json src/qt
 QT += network
-DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE GUI
+DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE GUI STATIC
 CONFIG += no_include_pwd
 CONFIG += thread
 CONFIG += static
@@ -58,7 +58,7 @@ contains(RELEASE, 1) {
     # This can be enabled for Windows, when we switch to MinGW >= 4.4.x.
 }
 # for extra security (see: https://wiki.debian.org/Hardening): this flag is GCC compiler-specific
-QMAKE_CXXFLAGS *= -D_FORTIFY_SOURCE=2
+QMAKE_CXXFLAGS *= -D_FORTIFY_SOURCE=2 -std=gnu++11
 # for extra security on Windows: enable ASLR and DEP via GCC linker flags
 win32:QMAKE_LFLAGS *= -Wl,--dynamicbase -Wl,--nxcompat
 # on Windows: enable GCC large address aware linker flag
@@ -69,7 +69,7 @@ win32:QMAKE_LFLAGS *= -Wl,--large-address-aware -static
 contains(USE_QRCODE, 1) {
     message(Building with QRCode support)
     DEFINES += USE_QRCODE
-    LIBS += -lqrencode
+    LIBS += -lqrencode -lpthread -lz
 }
 
 # use: qmake "USE_UPNP=1" ( enabled by default; default)
@@ -110,6 +110,7 @@ contains(USE_IPV6, -) {
 
 contains(BITCOIN_NEED_QT_PLUGINS, 1) {
     DEFINES += BITCOIN_NEED_QT_PLUGINS
+    QTPLUGIN += qcncodecs qjpcodecs qtwcodecs qkrcodecs qtaccessiblewidgets
     QTPLUGIN += qcncodecs qjpcodecs qtwcodecs qkrcodecs qtaccessiblewidgets
 }
 

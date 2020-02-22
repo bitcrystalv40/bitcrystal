@@ -143,7 +143,7 @@ public:
     bool AddAddress(const uint160& hash160);
     // Adds a key to the store, without saving it to disk (used by LoadWallet)
     bool LoadKey(const CKey& key) { return CCryptoKeyStore::AddKey(key); }
-	bool LoadAddress(const uint160& hash160) { return CKeyStore::AddAddress(hash160); }
+	bool LoadAddress(const uint160& hash160) { return CCryptoKeyStore::AddAddress(hash160); }
 
     bool LoadMinVersion(int nVersion) { nWalletVersion = nVersion; nWalletMaxVersion = std::max(nWalletMaxVersion, nVersion); return true; }
 

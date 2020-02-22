@@ -27,24 +27,24 @@ template<typename T> void ConvertTo(Value& value, bool fAllowNull=false);
 
 static const int BUG_WORKAROUND_BLOCK = 150000;         // Point of hard fork
 
-std::map<vchType, uint256> mapMyNames;
-std::map<vchType, set<uint256> > mapNamePending;
-std::map<uint256, CDiskTxPos> mapTestPool;
-std::set<vchType> setNewHashes;
-
 #ifdef GUI
-extern std::map<uint160, vchType> mapMyNameHashes;
+std::map<uint160, vchType> mapMyNameHashes;
 #endif
+std::map<vchType, uint256> mapMyNames;
+std::map<vchType, std::set<uint256> > mapNamePending;
+std::map<uint256, CDiskTxPos> mapTestPool;
+std::map<std::vector<unsigned char>, PreparedNameFirstUpdate> mapMyNameFirstUpdate;
+std::set<vchType> setNewHashes;
 
 extern uint256 SignatureHash(CScript scriptCode, const CTransaction& txTo, unsigned int nIn, int nHashType);
 
 // forward decls
-extern bool Solver(const CKeyStore& keystore, const CScript& scriptPubKey, uint256 hash, int nHashType, CScript& scriptSigRet);
-extern bool VerifyScript(const CScript& scriptSig, const CScript& scriptPubKey, const CTransaction& txTo, unsigned int nIn, int nHashType);
-extern bool IsConflictedTx(CNameDB & ndb, const CTransaction& tx, vchType& name);
-extern void rescanfornames();
-extern Value sendtoaddress(const Array& params, bool fHelp);
 
+//extern bool Solver(const CKeyStore& keystore, const CScript& scriptPubKey, uint256 hash, int nHashType, CScript& scriptSigRet);
+//extern bool VerifyScript(const CScript& scriptSig, const CScript& scriptPubKey, const CTransaction& txTo, unsigned int nIn, int nHashType);
+bool IsConflictedTx(CNameDB & ndb, const CTransaction& tx, vchType& name);
+//extern void rescanfornames();
+extern Value sendtoaddress(const Array& params, bool fHelp);
 
 class CNamecoinHooks : public CHooks
 {
@@ -60,6 +60,11 @@ public:
     virtual bool IsMine(const CTransaction& tx);
     virtual bool IsMine(const CTransaction& tx, const CTxOut& txout, bool ignore_name_new = false);
 };
+
+int64 GetNetworkFee(int nHeight)
+{
+    return nTransactionFee;
+}
 
 vchType
 vchFromValue (const Value& value)
@@ -150,7 +155,8 @@ bool IsMyName(const CTransaction& tx, const CTxOut& txout)
 {
     const CScript& scriptPubKey = RemoveNameScriptPrefix(txout.scriptPubKey);
     CScript scriptSig;
-    if (!Solver(*pwalletMain, scriptPubKey, 0, 0, scriptSig))
+	txnouttype type;
+    if (!Solver(*pwalletMain, scriptPubKey, 0, 0, scriptSig, type))
         return false;
     return true;
 }
@@ -1599,15 +1605,15 @@ bool DecodeNameScript(const CScript& script, int& op, vector<vector<unsigned cha
     return DecodeNameScript(script, op, vvch, pc);
 }
 
-bool DecodeNameScript(const CScript& script, int& op, vector<vector<unsigned char> > &vvch, CScript::const_iterator& pc)
+bool DecodeNameScript(const CScript& script, int & op, vector<vector<unsigned char> > &vvch, CScript::const_iterator& pc)
 {
     opcodetype opcode;
     if (!script.GetOp(pc, opcode))
         return false;
-    if (opcode < OP_1 || opcode > OP_16)
+    if (opcode < OP_NAME_NEW || opcode > OP_NAME_NOP)
         return false;
 
-    op = opcode - OP_1 + 1;
+    op = opcode + 0;
 
     for (;;) {
         vector<unsigned char> vch;

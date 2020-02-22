@@ -13,6 +13,7 @@ using namespace boost;
 
 extern bool fUseProxy;
 extern bool ffShutdown;
+extern void AdvertizeLocal();
 extern CService myAddrProxy;
 
 int nGotIRCAddresses = 0;

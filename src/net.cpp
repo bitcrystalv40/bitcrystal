@@ -193,7 +193,7 @@ bool RecvLine(SOCKET hSocket, string& strLine)
 
 // used when scores of local addresses may have changed
 // pushes better local address to peers
-void static AdvertizeLocal()
+void AdvertizeLocal()
 {
     LOCK(cs_vNodes);
     BOOST_FOREACH(CNode* pnode, vNodes)

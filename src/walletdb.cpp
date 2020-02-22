@@ -5,10 +5,10 @@
 
 #include "walletdb.h"
 #include "wallet.h"
-#include <boost/filesystem.hpp>
-
+#include "boost_filesystem.h"
 #ifdef GUI
 #include "namecoin.h"
+extern std::map<vchType, uint256> mapMyNames;
 extern std::map<std::vector<unsigned char>, PreparedNameFirstUpdate> mapMyNameFirstUpdate;
 extern std::map<uint160, std::vector<unsigned char> > mapMyNameHashes;   // Name for name_new hash (to show name in transaction list)
 #endif

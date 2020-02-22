@@ -12,7 +12,6 @@
 //for the getaddrinfo test
 #include <WS2tcpip.h>
 #pragma comment(lib, "ws2_32")
-
 #include <windows.h>
 #include <stdio.h>
 

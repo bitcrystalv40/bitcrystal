@@ -1,17 +1,13 @@
 #ifndef NAMECOIN_H
 #define NAMECOIN_H
 
+#include "hook.h"
 #include "json/json_spirit.h"
 
 static const int NAMECOIN_TX_VERSION = 0x7100;
 static const int64 MIN_AMOUNT = CENT;
 static const int MAX_NAME_LENGTH = 255;
 static const int MAX_VALUE_LENGTH = 1023;
-static const int OP_NAME_INVALID = 0x00;
-static const int OP_NAME_NEW = 0x01;
-static const int OP_NAME_FIRSTUPDATE = 0x02;
-static const int OP_NAME_UPDATE = 0x03;
-static const int OP_NAME_NOP = 0x04;
 static const int MIN_FIRSTUPDATE_DEPTH = 12;
 
 /* Maximum value length that is allowed by the UIs.  Currently,
@@ -24,11 +20,6 @@ class CNameDB;
 class CNameIndex;
 class CDiskTxPos;
 class uint256;
-
-extern std::map<vchType, uint256> mapMyNames;
-extern std::map<uint256, CDiskTxPos> mapTestPool;
-extern std::map<vchType, std::set<uint256> > mapNamePending;
-extern std::set<vchType> setNewHashes;
 
 bool doStrictChecks(unsigned nHeight);
 

@@ -17,7 +17,7 @@
 #include "ui_interface.h"
 #include "checkqueue.h"
 #include <boost/algorithm/string/replace.hpp>
-#include <boost/filesystem.hpp>
+#include "boost_filesystem.h"
 #include <boost/filesystem/fstream.hpp>
 using namespace std;
 using namespace boost;

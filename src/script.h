@@ -208,6 +208,13 @@ enum opcodetype
     OP_PUBKEY = 0xfe,
 
     OP_INVALIDOPCODE = 0xff,
+	
+	//namecoin
+	OP_NAME_INVALID = 0x00,
+    OP_NAME_NEW = 0xba,
+    OP_NAME_FIRSTUPDATE = 0xbb,
+    OP_NAME_UPDATE = 0xbc,
+    OP_NAME_NOP = 0xbd,
 };
 
 const char* GetOpName(opcodetype opcode);
@@ -675,6 +682,7 @@ bool IsCanonicalSignature(const std::vector<unsigned char> &vchSig);
 
 bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& script, const CTransaction& txTo, unsigned int nIn, unsigned int flags, int nHashType);
 bool Solver(const CScript& scriptPubKey, txnouttype& typeRet, std::vector<std::vector<unsigned char> >& vSolutionsRet);
+bool Solver(const CKeyStore& keystore, const CScript& scriptPubKey, uint256 hash, int nHashType, CScript& scriptSigRet, txnouttype& whichTypeRet);
 int ScriptSigArgsExpected(txnouttype t, const std::vector<std::vector<unsigned char> >& vSolutions);
 bool IsStandard(const CScript& scriptPubKey);
 bool IsMine(const CKeyStore& keystore, const CScript& scriptPubKey);
