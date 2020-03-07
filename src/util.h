@@ -39,6 +39,7 @@ typedef int socklen_t;
 #define WSAENOTSOCK         EBADF
 #define INVALID_SOCKET      (SOCKET)(~0)
 #define SOCKET_ERROR        -1
+typedef	unsigned int	u_int;
 typedef u_int SOCKET;
 #define _vsnprintf(a,b,c,d) vsnprintf(a,b,c,d)
 #define strlwr(psz)         to_lower(psz)

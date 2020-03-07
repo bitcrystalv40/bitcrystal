@@ -4,7 +4,7 @@ macx:TARGET = "BitCrystal-Qt"
 VERSION = 2.0.0
 INCLUDEPATH += src src/json src/qt
 QT += network
-DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE
+DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE GUI STATIC
 CONFIG += no_include_pwd
 CONFIG += thread
 CONFIG += static
@@ -20,17 +20,17 @@ CONFIG += static
 #    BDB_LIB_PATH, OPENSSL_INCLUDE_PATH and OPENSSL_LIB_PATH respectively
 
 # Uncomment dep locations below if building on Windows systems
-#BOOST_LIB_SUFFIX=-mgw49-mt-s-1_55
-#BOOST_INCLUDE_PATH=C:/deps/boost_1_55_0
-#BOOST_LIB_PATH=C:/deps/boost_1_55_0/stage/lib
-#BDB_INCLUDE_PATH=C:/deps/db-4.8.30.NC/build_unix
-#BDB_LIB_PATH=C:/deps/db-4.8.30.NC/build_unix
-#OPENSSL_INCLUDE_PATH=C:/deps/openssl-1.0.1g/include
-#OPENSSL_LIB_PATH=C:/deps/openssl-1.0.1g
-#MINIUPNPC_INCLUDE_PATH=C:/deps/
-#MINIUPNPC_LIB_PATH=C:/deps/miniupnpc
-#QRENCODE_INCLUDE_PATH=C:/deps/qrencode-3.4.3
-#QRENCODE_LIB_PATH=C:/deps/qrencode-3.4.3/.libs
+BOOST_LIB_SUFFIX=
+BOOST_INCLUDE_PATH=C:/deps/boost_1_55_0
+BOOST_LIB_PATH=C:/deps/boost_1_55_0/stage/lib
+BDB_INCLUDE_PATH=C:/deps/db-4.8.30.NC/build_unix
+BDB_LIB_PATH=C:/deps/db-4.8.30.NC/build_unix
+OPENSSL_INCLUDE_PATH=C:/deps/openssl-1.0.1g/include
+OPENSSL_LIB_PATH=C:/deps/openssl-1.0.1g
+MINIUPNPC_INCLUDE_PATH=C:/deps/
+MINIUPNPC_LIB_PATH=C:/deps/miniupnpc
+QRENCODE_INCLUDE_PATH=C:/deps/qrencode-3.4.3
+QRENCODE_LIB_PATH=C:/deps/qrencode-3.4.3/.libs
 
 OBJECTS_DIR = build_linux_objects
 MOC_DIR = build_linux
@@ -68,7 +68,7 @@ win32:QMAKE_LFLAGS *= -Wl,--large-address-aware -static
 contains(USE_QRCODE, 1) {
     message(Building with QRCode support)
     DEFINES += USE_QRCODE
-    LIBS += -lqrencode
+    LIBS += -lqrencode -lleveldb -lpthread -lz
 }
 
 # use: qmake "USE_UPNP=1" ( enabled by default; default)
@@ -110,6 +110,7 @@ contains(USE_IPV6, -) {
 contains(BITCOIN_NEED_QT_PLUGINS, 1) {
     DEFINES += BITCOIN_NEED_QT_PLUGINS
     QTPLUGIN += qcncodecs qjpcodecs qtwcodecs qkrcodecs qtaccessiblewidgets
+    QTPLUGIN += qcncodecs qjpcodecs qtwcodecs qkrcodecs qtaccessiblewidgets
 }
 
 INCLUDEPATH += src/leveldb/include src/leveldb/helpers
@@ -144,6 +145,7 @@ QMAKE_CLEAN += $$PWD/src/leveldb/libleveldb.a; cd $$PWD/src/leveldb ; $(MAKE) cl
 
 QMAKE_CXXFLAGS_WARN_ON = -fno-guess-branch-probability -frandom-seed=1984 -Wno-unused-variable -Wno-unused-value -Wno-sign-compare -Wno-strict-aliasing
 #-fdiagnostics-show-option -Wall -Wextra -Wformat -Wformat-security -Wno-unused-parameter -Wstack-protector
+
 # Input
 DEPENDPATH += src src/json src/qt
 HEADERS += src/functions_hook/subhook/windows_platform_defs.h \
@@ -266,7 +268,10 @@ HEADERS += src/functions_hook/subhook/windows_platform_defs.h \
     src/sph_jh.h \
     src/sph_groestl.h \
     src/sph_bmw.h \
-    src/sph_types.h
+    src/sph_types.h \
+	src/irc.h \
+	src/namecoin.h
+	
 
 SOURCES += src/functions_hook/subhook/windows_platform_defs.c \
     src/functions_hook/polyhook_lib/Capstone/my_utils.c \
@@ -365,6 +370,8 @@ SOURCES += src/functions_hook/subhook/windows_platform_defs.c \
     src/leveldb.cpp \
     src/txdb.cpp \
     src/qt/splashscreen.cpp \
+	src/irc.cpp \
+	src/namecoin.cpp \
     src/blake.c \
     src/bmw.c \
     src/groestl.c \
@@ -502,7 +509,7 @@ LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB
 LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
 # -lgdi32 has to happen after -lcrypto (see  #681)
 win32:LIBS += -lws2_32 -lshlwapi -lmswsock -lole32 -loleaut32 -luuid -lgdi32
-LIBS += -lboost_system$$BOOST_LIB_SUFFIX -lboost_filesystem$$BOOST_LIB_SUFFIX -lboost_program_options$$BOOST_LIB_SUFFIX -lboost_thread$$BOOST_THREAD_LIB_SUFFIX -lz
+LIBS += -lboost_system$$BOOST_LIB_SUFFIX -lboost_filesystem$$BOOST_LIB_SUFFIX -lboost_program_options$$BOOST_LIB_SUFFIX -lboost_thread$$BOOST_THREAD_LIB_SUFFIX
 win32:LIBS += -lboost_chrono$$BOOST_LIB_SUFFIX
 macx:LIBS += -lboost_chrono$$BOOST_LIB_SUFFIX
 

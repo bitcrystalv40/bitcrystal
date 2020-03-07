@@ -14,9 +14,9 @@ if [ $WHOAMI_ROOT -ne 0 ]; then
         echo "Are you running this script under root?"
         exit 0;
 fi
-$PREFIX cp my.leveldb.Makefile src/leveldb/Makefile
-$PREFIX rm src/leveldb/libleveldb.a
-$PREFIX make -f src/leveldb/Makefile -j4
+#$PREFIX cp my.leveldb.Makefile src/leveldb/Makefile
+#$PREFIX rm src/leveldb/libleveldb.a
+#$PREFIX make -f src/leveldb/Makefile -j4
 
 $PREFIX apt-get install libdb++-dev
 $PREFIX apt-get install libminiupnpc10
@@ -57,11 +57,11 @@ $PREFIX apt-get install libdb4.8-dev
 $PREFIX apt-get install libdb4.8++-dev
 $PREFIX apt-get install libminiupnpc-dev
 
-$PREFIX cp ./my.makefile.linux src
-$PREFIX cp ./build/build.h src
-$PREFIX cp ./build_deps/deps/qrencode-3.4.3/qrencode.h src/qt
-$PREFIX cd src/
-$PREFIX make -f ./my.makefile.linux "USE_UPNP=1"
-$PREFIX cd ..
-$PREFIX qmake-qt4 "USE_QRCODE=1" "USE_UPNP=1" "USE_IPV6=-" bitcrystal_linux-qt.pro -r CONFIG+=release
-$PREFIX make -j4 && $PREFIX rm src/build.h && $PREFIX rm src/qt/qrencode.h
+#$PREFIX cp ./my.makefile.linux src
+#$PREFIX cp ./build/build.h src
+#$PREFIX cp ./build_deps/deps/qrencode-3.4.3/qrencode.h src/qt
+#$PREFIX cd src/
+#$PREFIX make -f ./my.makefile.linux "USE_UPNP=1"
+#$PREFIX cd ..
+$PREFIX qmake-qt4 "USE_QRCODE=1" "USE_UPNP=1" "USE_IPV6=1" bitcrystal_linux-qt.pro -r CONFIG+=release
+$PREFIX make -j4 #&& $PREFIX rm src/build.h && $PREFIX rm src/qt/qrencode.h
